@@ -15,18 +15,14 @@ The Economic Research Service (ERS), which is a subdivision of the USDA, provide
 
 For each state, we computed the share of animal agriculture by (1) including feed crops and (2) excluding feed crops (both numbers are decimals). The explicit formulas are given below
 
+<p align="center">
+    <img src="https://latex.codecogs.com/svg.image?\text{Agriculture&space;share,&space;with&space;feed}&space;=&space;\frac{\text{Animals&space;and&space;Products&space;&plus;&space;Feed&space;Crops}}{\text{All&space;Commodities}" title="\text{Agriculture share, with feed} = \frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}" />
+</p>
 
-$$
-\begin{equation}
-\text{Agriculture share, with feed} = \frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}}
-\end{equation}
-$$
+<p align="center">
+    <img src="https://latex.codecogs.com/svg.image?\text{Agriculture&space;share,&space;without&space;feed}&space;=&space;\frac{\text{Animals&space;and&space;Products}}{\text{All&space;Commodities}}" title="\text{Agriculture share, without feed} = \frac{\text{Animals and Products}}{\text{All Commodities}}" />
+</p>
 
-$$
-\begin{equation}
-\text{Agriculture share, without feed} = \frac{\text{Animals and Products}}{\text{All Commodities}}
-\end{equation}
-$$
 
 ## NASS Census Data
 
@@ -34,17 +30,13 @@ The National Agricultural Statistice Service (NASS), which is a subdivision of t
 
 For each state, we estimate the number of family farmers by using the "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS" field in the NASS data. We then multiply this by our previously computed share values to get an estimate for the number of animal farmers in each state.
 
-$$
-\begin{equation}
-\text{Number of Animal Farmers, without feed} = \text{(Agriculture share, with feed)} * \text{(Number of Family Farmers)}
-\end{equation}
-$$
+<p align="center">
+    <img src="https://latex.codecogs.com/svg.image?\text{Number&space;of&space;Animal&space;Farmers,&space;without&space;feed}&space;=&space;\text{(Agriculture&space;share,&space;with&space;feed)}&space;*&space;\text{(Number&space;of&space;Family&space;Farmers)}" title="\text{Number of Animal Farmers, without feed} = \text{(Agriculture share, with feed)} * \text{(Number of Family Farmers)}" />
+</p>
 
-$$
-\begin{equation}
-\text{Number of Animal Farmers, with feed} = \text{(Agriculture share, without feed)} * \text{(Number of Family Farmers)}
-\end{equation}
-$$
+<p align="center">
+    <img src="https://latex.codecogs.com/svg.image?\text{Number&space;of&space;Animal&space;Farmers,&space;with&space;feed}&space;=&space;\text{(Agriculture&space;share,&space;without&space;feed)}&space;*&space;\text{(Number&space;of&space;Family&space;Farmers)}" title="\text{Number of Animal Farmers, with feed} = \text{(Agriculture share, without feed)} * \text{(Number of Family Farmers)}" />
+</p>
 
 ## Repository Stucture
 
