@@ -103,8 +103,8 @@ Folder than contains the following data files
         - **Rows (Granularity)**: State
         - **Columns**: 
             - State
-            - **For each of 2017, 2012**: Agriculture_share_without_feed, Agriculture_share_with_feed, Number_of_Family_Farmers, Number_of_Animal_Farmers_without_feed, Number_of_Animal_Farmers_with_feed
-            - **For each of 2018, 2012**: Total_population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
+            - **For each of 2017, 2012**: Animal_ag_share_no_feed, Animal_ag_share_feed, Number_of_Family_Farmers, Farmers_in_animal_ag_no_feed, Farmers_in_animal_ag_feed
+            - **For each of 2018, 2012**: Total_Population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
         - **Note**: voter and population totals are multiplied by 1000 to reflect the true raw values.
     - Only contains estimates for the years 2012, 2017, as those are the only years with census data from the NASS.
     - Only contains population and voting figures for the years 2012, 2018, as those are the years closest to the relevant NASS years (2017, 2012).
@@ -114,8 +114,9 @@ Folder than contains the following data files
         - **Rows (Granularity)**: (State, Year) combination
         - **Columns**: 
             - State
-            - Agriculture_share_without_feed, Agriculture_share_with_feed, Number_of_Family_Farmers, Number_of_Animal_Farmers_without_feed, Number_of_Animal_Farmers_with_feed
-            - Total_population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
+            - Year
+            - Animal_ag_share_no_feed, Animal_ag_share_feed, Number_of_Family_Farmers, Farmers_in_animal_ag_no_feed, Farmers_in_animal_ag_feed
+            - Total_Population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
         - **Note**: voter and population totals are multiplied by 1000 to reflect the true raw values.
     - Only contains estimates for the years 2012, 2017, as those are the only years with census data from the NASS.
     - Only contains population and voting figures for the years 2012, 2018, as those are the years closest to the relevant NASS years (2017, 2012).
