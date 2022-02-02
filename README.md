@@ -38,6 +38,10 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
     <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers,&space;with&space;feed}&space;=&space;\text{(Ag.&space;Share,&space;with&space;feed)}&space;*&space;\text{(Num&space;Family&space;Farmers)}" title="\text{Num Animal Farmers, with feed} = \text{(Ag. Share, with feed)} * \text{(Num Family Farmers)}" />
 </p>
 
+## Exporatory Data Analysis
+
+
+
 ## Repository Stucture
 
 `data/`: Folder than contains the following data files
@@ -69,8 +73,8 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
         - **Rows (Granularity)**: State
         - **Columns**: 
             - State
-            - For each of 2017, 2012: Agriculture_share_without_feed, Agriculture_share_with_feed, Number_of_Family_Farmers, Number_of_Animal_Farmers_without_feed, Number_of_Animal_Farmers_with_feed
-            - For each of 2018, 2012: Total_population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
+            - **For each of 2017, 2012**: Agriculture_share_without_feed, Agriculture_share_with_feed, Number_of_Family_Farmers, Number_of_Animal_Farmers_without_feed, Number_of_Animal_Farmers_with_feed
+            - **For each of 2018, 2012**: Total_population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
         - **Note**: voter and population totals are multiplied by 1000 to reflect the true raw values.
     - Only contains estimates for the years 2012, 2017, as those are the only years with census data from the NASS.
     - Only contains population and voting figures for the years 2012, 2018, as those are the years closest to the relevant NASS years (2017, 2012).
@@ -82,13 +86,13 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
 - Reads in `data\census_population_and_voting.xlsx`, joins this census data from 2018 and 2012 with the joined data (created in above steps)
 - Writes the estimates to excel file (`data\family_farmer_estimates.xlsx`)
 
-`run.sh`: Bash script that installs necessary libraries (pandas, numpy) and executes `compute_ranchers.py`
+`run.sh`: Bash script that installs necessary libraries (pandas, numpy, openpyxl) and executes `compute_ranchers.py`
 
 ---
 
 ## Reproducibility
 
-1. Download Python ([here] https://www.python.org/downloads/macos/)
+1. Download Python ([here](https://www.python.org/downloads/macos/))
 2. Download this repository
 3. (Optional) Modify the data files prior to computation (i.e. if method of estimation changes, or new census data becomes available)
 4. Open Terminal/Cmd window on machine, navigate to the directory where you have saved the repository, and run the following command

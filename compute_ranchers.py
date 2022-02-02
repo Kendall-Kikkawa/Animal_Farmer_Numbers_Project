@@ -140,12 +140,6 @@ if __name__ == "__main__":
                                                 "Number_of_Family_Farmers", "Farmers_in_animal_ag_no_feed", 
                                                 "Farmers_in_animal_ag_feed"]]
 
-    # Create different version of the dataset that has one line per state and the 2017 numbers in the first set of columns 
-    # followed by 2012 numbers
-    farmer_data_2012 = rename_columns_by_year(farmer_data, "2012")
-    farmer_data_2017 = rename_columns_by_year(farmer_data, "2017")
-    farmer_data_final = farmer_data_2017.merge(farmer_data_2012, on="State")
-
     # Load Population and Voter data
     population_voter_data = pd.read_excel('data/census_population_and_voting.xlsx')
     # Clean State column for string matching
@@ -156,19 +150,38 @@ if __name__ == "__main__":
     for column in population_voter_data.columns.values:
         if column in ["Total_Population", "Total_Citizen_Population", "Total_Registered", "Total_Voted"]:
             population_voter_data[column] = population_voter_data[column] * 1000
+    # Convert 2018 to 2017, since we are using these estimates
+    population_voter_data['Year'] = population_voter_data['Year'].astype(str) # Convert Year to string for joining
+    population_voter_data['Year'] = population_voter_data['Year'].str.replace('2018', '2017')
 
+    print("\nLoaded and Processed Population and Voter Data")
+
+    # Create final dataset with [State, Year] Granularity
+    final_data = farmer_data.merge(population_voter_data, on=["State", 'Year'])
+    print("\nJoined Census data with Population and Voter data")
+
+    # Export dataset as excel file
+    final_data.to_excel('data/family_farmer_estimates_state_year_level.xlsx', index=False)
+    print("\nExported rancher dataset as excel file in the data/ directory\n")
+
+    
+    ### Create New dataset with State Granularity ###
+    # Create different version of the dataset that has one line per state and the 2017 numbers in the first set of columns 
+    # followed by 2012 numbers
+    farmer_data_2012 = rename_columns_by_year(farmer_data, "2012")
+    farmer_data_2017 = rename_columns_by_year(farmer_data, "2017")
+    farmer_data_final = farmer_data_2017.merge(farmer_data_2012, on="State")
+    
     # Create different version of the dataset that has one line per state and the 2018 numbers in the first set of columns 
     # followed by 2012 numbers
-    population_voter_data['Year'] = population_voter_data['Year'].astype(str) # Convert Year to string for joining
     population_voter_data_2012 = rename_columns_by_year(population_voter_data, "2012")
     population_voter_data_2018 = rename_columns_by_year(population_voter_data, "2018")
     population_voter_data_final = population_voter_data_2018.merge(population_voter_data_2012, on="State")
-    print("\nLoaded and Processed Population and Voter Data")
 
-    # Create final dataset
+    # Create final dataset, State Granularity
     final_data = farmer_data_final.merge(population_voter_data_final, on="State")
     print("\nJoined Census data with Population and Voter data")
 
     # Export dataset as excel file
-    final_data.to_excel('data/family_farmer_estimates.xlsx', index=False)
+    final_data.to_excel('data/family_farmer_estimates_state_level.xlsx', index=False)
     print("\nExported rancher dataset as excel file in the data/ directory\n")
