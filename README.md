@@ -72,7 +72,9 @@ Again, we visualize this metric when excluding and including feed commodities, r
 
 ## Repository Stucture
 
-`data/`: Folder than contains the following data files
+### `data/`
+Folder than contains the following data files
+
 - `ers_usda.xlsx`: 
     - Excel file containing the annual cash commodities by state, for years 2012 - 2020. 
     - Contains 52 sheets (directory sheet, entire US, and one sheet for each state)
@@ -118,7 +120,9 @@ Again, we visualize this metric when excluding and including feed commodities, r
     - Only contains estimates for the years 2012, 2017, as those are the only years with census data from the NASS.
     - Only contains population and voting figures for the years 2012, 2018, as those are the years closest to the relevant NASS years (2017, 2012).
 
-`plots/`: Folder than contains the png files for the following plots
+### `plots/`
+Folder than contains the png files for the plots that are created in `USDA_data_analysis.ipynb`, and that are embedded in this ReadMe file.
+
 - `num_farmers_without_feed.png`
 - `num_farmers_with_feed.png`
 - `farmers_per_person_without_feed.png`
@@ -126,18 +130,23 @@ Again, we visualize this metric when excluding and including feed commodities, r
 - `farmers_per_voter_without_feed.png`
 - `farmers_per_voter_with_feed.png`
 
-`compute_ranchers.py`: Python file that performs data cleaning and calculations
+### `compute_ranchers.py`
+Python file that performs data cleaning and calculations
+
 - Reads in `data\ers_usda.xlsx`, calculates agricultural share (with and without feed) for each state
 - Reads in `data\nass_usda.xlsx`, joins this census data with the commdity data from 2017 and 2012
 - Calculates the number of animal farmers (with and without feed)
 - Reads in `data\census_population_and_voting.xlsx`, joins this census data from 2018 and 2012 with the joined data (created in above steps)
 - Writes the estimates to excel file (`data\family_farmer_estimates.xlsx`)
 
-`USDA_data_analysis.ipynb`: Jupyter Notebook that computes normalized metrics and creates the plots in the Exploratory Data Analysis section, using python and the ([plotly](https://plotly.com/)) library
+### `USDA_data_analysis.ipynb`
+Jupyter Notebook that computes normalized metrics and creates the plots in the Exploratory Data Analysis section, using python and the ([plotly](https://plotly.com/)) library
+
 - The plots are more interactive (via hovering over different states) when viewed in this jupyter notebook. 
 - These plots could also be deployed as interactive web apps via Dash or Flask.
 
-`run.sh`: Bash script that installs necessary libraries (pandas, numpy, openpyxl) and executes `compute_ranchers.py`
+### `run.sh`
+Bash script that installs necessary libraries (pandas, numpy, openpyxl) and executes `compute_ranchers.py`
 
 ---
 
