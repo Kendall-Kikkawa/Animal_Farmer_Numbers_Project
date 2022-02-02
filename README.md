@@ -40,7 +40,35 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
 
 ## Exporatory Data Analysis
 
+To understand the geographic distribution of the number of family farmers in animal agriculture, we visualize the raw number of family farmers in the two plots below, without and with feed, respectively.
 
+![](plots/num_farmers_without_feed.png) 
+
+![](plots/num_farmers_with_feed.png)
+
+To better understand how the number of farmers compares to the overall population in each state, we also visualized the number of farmers per person in each state, via the equation below:
+
+<p align="center">
+    <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers&space;per&space;Person}&space;=&space;\frac{\text{Num&space;of&space;Family&space;Farmers}}{\text{Total&space;Population}}" title="\text{Num Animal Farmers per Person} = \frac{\text{Num of Family Farmers}}{\text{Total Population}}" />
+</p>
+
+Again, we visualize this metric when excluding and including feed commodities, respectively.
+
+![](plots/farmers_per_person_without_feed.png) 
+
+![](plots/farmers_per_person_with_feed.png)
+
+To better understand how the number of farmers compares to the number of voters in each state, we also visualized the number of farmers per registered voter in each state, via the equation below:
+
+<p align="center">
+    <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers&space;per&space;Person}&space;=&space;\frac{\text{Num&space;of&space;Family&space;Farmers}}{\text{Total&space;Registered&space;Voters}}" title="\text{Num Animal Farmers per Person} = \frac{\text{Num of Family Farmers}}{\text{Total Registered Voters}}" />
+</p>
+
+Again, we visualize this metric when excluding and including feed commodities, respectively.
+
+![](plots/farmers_per_voter_without_feed.png) 
+
+![](plots/farmers_per_voter_with_feed.png) 
 
 ## Repository Stucture
 
@@ -68,8 +96,8 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
         - The 2018 data can be found ([here](https://www.census.gov/data/tables/time-series/demo/voting-and-registration/p20-583.html)), in table 4a
         - The 2012 data can be found ([here](https://www.census.gov/data/tables/2012/demo/voting-and-registration/p20-568.html)), in table 4a
     - The U.S. Census Bureau only has data available every 2 years, so the 2018 data is used as an estimate for the 2017 voter and population numbers
-- `family_farmer_estimates.xlsx`:
-    - Excel file containing the estimates for the number of family farmers involved in animal agriculture (**this is the file with the relevant estimates**)
+- `family_farmer_estimates_state_level.xlsx`:
+    - Excel file containing the estimates for the number of family farmers involved in animal agriculture (**this is the first with the relevant estimates**).
         - **Rows (Granularity)**: State
         - **Columns**: 
             - State
@@ -78,6 +106,25 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
         - **Note**: voter and population totals are multiplied by 1000 to reflect the true raw values.
     - Only contains estimates for the years 2012, 2017, as those are the only years with census data from the NASS.
     - Only contains population and voting figures for the years 2012, 2018, as those are the years closest to the relevant NASS years (2017, 2012).
+- `family_farmer_estimates_state_year_level.xlsx`:
+    - Excel file containing the estimates for the number of family farmers involved in animal agriculture (**this is the second file with the relevant estimates**).
+    - This file differs from `family_farmer_estimates_state_level.xlsx` in that there are two rows for each state, for both 2017 and 2012 (including this year column allows for additional analysis and plotting).
+        - **Rows (Granularity)**: (State, Year) combination
+        - **Columns**: 
+            - State
+            - Agriculture_share_without_feed, Agriculture_share_with_feed, Number_of_Family_Farmers, Number_of_Animal_Farmers_without_feed, Number_of_Animal_Farmers_with_feed
+            - Total_population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
+        - **Note**: voter and population totals are multiplied by 1000 to reflect the true raw values.
+    - Only contains estimates for the years 2012, 2017, as those are the only years with census data from the NASS.
+    - Only contains population and voting figures for the years 2012, 2018, as those are the years closest to the relevant NASS years (2017, 2012).
+
+`plots/`: Folder than contains the png files for the following plots
+- `num_farmers_without_feed.png`
+- `num_farmers_with_feed.png`
+- `farmers_per_person_without_feed.png`
+- `farmers_per_person_with_feed.png`
+- `farmers_per_voter_without_feed.png`
+- `farmers_per_voter_with_feed.png`
 
 `compute_ranchers.py`: Python file that performs data cleaning and calculations
 - Reads in `data\ers_usda.xlsx`, calculates agricultural share (with and without feed) for each state
@@ -85,6 +132,10 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
 - Calculates the number of animal farmers (with and without feed)
 - Reads in `data\census_population_and_voting.xlsx`, joins this census data from 2018 and 2012 with the joined data (created in above steps)
 - Writes the estimates to excel file (`data\family_farmer_estimates.xlsx`)
+
+`USDA_data_analysis.ipynb`: Jupyter Notebook that computes normalized metrics and creates the plots in the Exploratory Data Analysis section, using python and the ([plotly](https://plotly.com/)) library
+- The plots are more interactive (via hovering over different states) when viewed in this jupyter notebook. 
+- These plots could also be deployed as interactive web apps via Dash or Flask.
 
 `run.sh`: Bash script that installs necessary libraries (pandas, numpy, openpyxl) and executes `compute_ranchers.py`
 
@@ -100,6 +151,9 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
     ```
     bash run.sh
     ```
+
+5. (Optional) Modify the code in `USDA_data_analysis.ipynb` to generate maps/plots with different metrics.
+6. (Optional) Modify the code in `USDA_data_analysis.ipynb` to deploy the maps/plots as Dash or Flask web apps.
 
 ---
 
