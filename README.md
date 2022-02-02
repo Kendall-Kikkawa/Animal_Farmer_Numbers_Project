@@ -44,34 +44,34 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
 - `ers_usda.xlsx`: 
     - Excel file containing the annual cash commodities by state, for years 2012 - 2020. 
     - Contains 52 sheets (directory sheet, entire US, and one sheet for each state)
-        - Rows (Granularity): Category of commodities
-        - Columns: Different years
-        - Values: Annual Cash Receipt for given comodity
+        - **Rows (Granularity)**: Category of commodities
+        - **Columns**: Different years
+        - **Values**: Annual Cash Receipt for given comodity
     - Entire file is downloadable from the ERS ([here](https://data.ers.usda.gov/reports.aspx?ID=17832))
 - `nass_usda.xlsx`:
     - Excel file containing the Number of Family Farmers for each state
-        - Rows (Granularity): (State, Year) combination
-        - Columns: State, Year, Number_of_Family_Farmers
+        - **Rows (Granularity)**: (State, Year) combination
+        - **Columns**: State, Year, Number_of_Family_Farmers
     - Data file was created manually by extracting values from NASS ([here](https://www.nass.usda.gov/Quick_Stats/CDQT/chapter/1/table/1))
         - Equated the field "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS" with the Number of Family Farmers
     - NASS only has Census data from the years 2012 and 2017
 - `census_population_and_voting.xlsx`:
     - Excel File containting state-level population and voter estimates from 2018, 2012
-        - Rows (Granularity): (State, Year) combination
-        - Columns: State, Year, Total_population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
-        - Note: voter and population totals are in thousands
+        - **Rows (Granularity)**: (State, Year) combination
+        - **Columns**: State, Year, Total_population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
+        - **Note**: voter and population totals are in thousands
     - The table was manually tweaked to ease the burden of reading and processing the data, but the raw data is available from the U.S. Census Bureau, Current Population Survey, November 2018, and the U.S. Census Bureau, Current Population Survey, November 2012.
         - The 2018 data can be found ([here](https://www.census.gov/data/tables/time-series/demo/voting-and-registration/p20-583.html)), in table 4a
         - The 2012 data can be found ([here](https://www.census.gov/data/tables/2012/demo/voting-and-registration/p20-568.html)), in table 4a
     - The U.S. Census Bureau only has data available every 2 years, so the 2018 data is used as an estimate for the 2017 voter and population numbers
 - `family_farmer_estimates.xlsx`:
-    - Excel file containing the estimates for the number of family farmers involved in animal agriculture (**the file with the relevant estimates**)
-        - Rows (Granularity): State
-        - Columns: 
+    - Excel file containing the estimates for the number of family farmers involved in animal agriculture (**this is the file with the relevant estimates**)
+        - **Rows (Granularity)**: State
+        - **Columns**: 
             - State
             - For each of 2017, 2012: Agriculture_share_without_feed, Agriculture_share_with_feed, Number_of_Family_Farmers, Number_of_Animal_Farmers_without_feed, Number_of_Animal_Farmers_with_feed
             - For each of 2018, 2012: Total_population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
-                - Note: voter and population totals are multiplied by 1000 to reflect the true raw values.
+        - **Note**: voter and population totals are multiplied by 1000 to reflect the true raw values.
     - Only contains estimates for the years 2012, 2017, as those are the only years with census data from the NASS.
     - Only contains population and voting figures for the years 2012, 2018, as those are the years closest to the relevant NASS years (2017, 2012).
 
