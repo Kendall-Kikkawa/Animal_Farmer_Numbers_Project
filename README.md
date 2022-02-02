@@ -51,21 +51,28 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
 - `nass_usda.xlsx`:
     - Excel file containing the Number of Family Farmers for each state
         - Rows (Granularity): (State, Year) combination
-        - Columns: State, Year, Number of Family Farmers
+        - Columns: 
+            - State
+            - Year
+            - Number_of_Family_Farmers
     - Data file was created manually by extracting values from NASS ([here](https://www.nass.usda.gov/Quick_Stats/CDQT/chapter/1/table/1))
         - Equated the field "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS" with the Number of Family Farmers
     - NASS only has Census data from the years 2012 and 2017
 - `family_farmer_estimates.xlsx`:
     - Excel file containing the estimates for the number of family farmers involved in animal agriculture (i.e. the file with the relevant estimates)
-        - Rows (Granularity): (State, Year) combination
+        - Rows (Granularity): State
         - Columns: 
             - State
-            - Year
-            - Agriculture share without feed
-            - Agriculture share with feed
-            - Number of Family Farmers
-            - Number of Animal Farmers without feed
-            - Number of Animal Farmers with feed
+            - Agriculture_share_without_feed_2017
+            - Agriculture_share_with_feed_2017
+            - Number_of_Family_Farmers_2017
+            - Number_of_Animal_Farmers_without_feed_2017
+            - Number_of_Animal_Farmers_with_feed_2017
+            - Agriculture_share_without_feed_2012
+            - Agriculture_share_with_feed_2012
+            - Number_of_Family_Farmers_2012
+            - Number_of_Animal_Farmers_without_feed_2012
+            - Number_of_Animal_Farmers_with_feed_2012
     - Only contains estimates for the years 2012, 2017, as those are the only years with census data from the NASS
 
 `compute_ranchers.py`: Python file that performs data cleaning and calculations

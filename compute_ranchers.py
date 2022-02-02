@@ -6,11 +6,11 @@ def clean_ers_data(state_name: str) -> pd.DataFrame:
     """
     Cleans ERS data (in 'ers_usda.xlsx') containing commodity receipts by state
 
-    Input:
-    - state_name (str): name of the state to be cleaned
+    Args:
+        state_name (str): name of the state to be cleaned
 
-    Output:
-    - state_data (pd.DataFrame): dataframe containing cleaned commodity data
+    Returns:
+        state_data (pd.DataFrame): dataframe containing cleaned commodity data
     """
     # Read in file
     state_data = pd.read_excel('data/ers_usda.xlsx', header=2, sheet_name=state_name)
@@ -46,6 +46,44 @@ def clean_ers_data(state_name: str) -> pd.DataFrame:
     print(f"Loaded ERS Commodity data for {state_name}")
 
     return state_data
+
+
+def rename_columns_by_year(census_data_df, year):
+    """
+    Reshapes dataframe so that each column has a year attached, drops year column
+    
+    Example:
+    - df begins with following columns
+        - State
+        - Year (e.g. "2017")
+        - Animal_ag_share_no_feed
+        - Animal_ag_share_feed
+        - Number_of_Family Farmers
+        - Farmers_in_animal_ag_no_feed
+        - Farmers_in_animal_ag_feed
+    - df ends with following columns
+        - State_2017
+        - Animal_ag_share_no_feed_2017
+        - Animal_ag_share_feed_2017
+        - Number_of_Family Farmers_2017
+        - Farmers_in_animal_ag_no_feed_2017
+        - Farmers_in_animal_ag_feed_2017
+
+    Args:
+        census_data_df (pd.DataFrame]): table containing joined ers, nass data, reduced to the relevant columns
+        year (string): year
+
+    Returns:
+        cleaned_df (pd.DataFrame): cleaned dataframe
+    """
+    cleaned_df = census_data_df[census_data_df["Year"] == year]
+    cleaned_df = cleaned_df.drop(columns=['Year'])
+    
+    for column in cleaned_df.columns.values:
+        if column != "State":
+            cleaned_df = cleaned_df.rename(columns={column: column + "_" + year})
+
+    return cleaned_df
 
 
 if __name__ == "__main__":
@@ -89,19 +127,26 @@ if __name__ == "__main__":
 
     ### COMPUTE NUMBER OF FAMILY FARMERS IN ANIMAL AG WITHOUT FEED
     # ("Animals and Products / All Commodities") * Number of Family Farmers
-    all_data['Farmers_in_animal_ag_no_feed'] =  np.rint(all_data['Animal_ag_share_no_feed'] * all_data["Number of Family Farmers"])
+    # round to nearest integer
+    all_data['Farmers_in_animal_ag_no_feed'] =  np.rint(all_data['Animal_ag_share_no_feed'] * all_data["Number_of_Family_Farmers"])
     ###  COMPUTE NUMBER OF FAMILY FARMERS IN ANIMAL AG WITHOUT FEED
     # (("Animals and Products" + "Feed Crops") / All Commodities") * Number of Family Farmers
-    all_data['Farmers_in_animal_ag_feed'] =  np.rint(all_data['Animal_ag_share_feed'] * all_data["Number of Family Farmers"])
+    all_data['Farmers_in_animal_ag_feed'] =  np.rint(all_data['Animal_ag_share_feed'] * all_data["Number_of_Family_Farmers"])
 
     print("\nComputed Number of Family Farmers in Animal Agriculture (with and without feed)")
 
     # Reduce dataset to the relevant years and columns
     census_data = all_data[all_data["Year"].isin(["2012", "2017"])][["State", "Year", "Animal_ag_share_no_feed", "Animal_ag_share_feed", 
-                                                "Number of Family Farmers", "Farmers_in_animal_ag_no_feed", 
+                                                "Number_of_Family_Farmers", "Farmers_in_animal_ag_no_feed", 
                                                 "Farmers_in_animal_ag_feed"]]
 
+    # Create different version of the dataset that has one line per state and the 2017 numbers in the first set of columns 
+    # followed by 2012 numbers
+    census_data_2012 = rename_columns_by_year(census_data, "2012")
+    census_data_2017 = rename_columns_by_year(census_data, "2017")
+    census_data_final = census_data_2017.merge(census_data_2012, on="State")
+
     # Export dataset as excel file
-    census_data.to_excel('data/family_farmer_estimates.xlsx', index=False)
+    census_data_final.to_excel('data/family_farmer_estimates.xlsx', index=False)
 
     print("\nExported rancher dataset as excel file in the data/ directory\n")
