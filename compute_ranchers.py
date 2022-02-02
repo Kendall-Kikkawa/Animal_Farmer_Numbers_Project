@@ -48,7 +48,7 @@ def clean_ers_data(state_name: str) -> pd.DataFrame:
     return state_data
 
 
-def rename_columns_by_year(census_data_df, year):
+def rename_columns_by_year(df, year):
     """
     Reshapes dataframe so that each column has a year attached, drops year column
     
@@ -76,7 +76,7 @@ def rename_columns_by_year(census_data_df, year):
     Returns:
         cleaned_df (pd.DataFrame): cleaned dataframe
     """
-    cleaned_df = census_data_df[census_data_df["Year"] == year]
+    cleaned_df = df[df["Year"] == year]
     cleaned_df = cleaned_df.drop(columns=['Year'])
     
     for column in cleaned_df.columns.values:
@@ -136,17 +136,39 @@ if __name__ == "__main__":
     print("\nComputed Number of Family Farmers in Animal Agriculture (with and without feed)")
 
     # Reduce dataset to the relevant years and columns
-    census_data = all_data[all_data["Year"].isin(["2012", "2017"])][["State", "Year", "Animal_ag_share_no_feed", "Animal_ag_share_feed", 
+    farmer_data = all_data[all_data["Year"].isin(["2012", "2017"])][["State", "Year", "Animal_ag_share_no_feed", "Animal_ag_share_feed", 
                                                 "Number_of_Family_Farmers", "Farmers_in_animal_ag_no_feed", 
                                                 "Farmers_in_animal_ag_feed"]]
 
     # Create different version of the dataset that has one line per state and the 2017 numbers in the first set of columns 
     # followed by 2012 numbers
-    census_data_2012 = rename_columns_by_year(census_data, "2012")
-    census_data_2017 = rename_columns_by_year(census_data, "2017")
-    census_data_final = census_data_2017.merge(census_data_2012, on="State")
+    farmer_data_2012 = rename_columns_by_year(farmer_data, "2012")
+    farmer_data_2017 = rename_columns_by_year(farmer_data, "2017")
+    farmer_data_final = farmer_data_2017.merge(farmer_data_2012, on="State")
+
+    # Load Population and Voter data
+    population_voter_data = pd.read_excel('data/census_population_and_voting.xlsx')
+    # Clean State column for string matching
+    population_voter_data['State'] = population_voter_data['State'].str.title()
+    # Convert non State/Year columns to numeric
+    population_voter_data.iloc[:, 2:] = population_voter_data.iloc[:, 2:].apply(pd.to_numeric)
+    # Multiply population and voter data numbers to get true values
+    for column in population_voter_data.columns.values:
+        if column in ["Total_Population", "Total_Citizen_Population", "Total_Registered", "Total_Voted"]:
+            population_voter_data[column] = population_voter_data[column] * 1000
+
+    # Create different version of the dataset that has one line per state and the 2018 numbers in the first set of columns 
+    # followed by 2012 numbers
+    population_voter_data['Year'] = population_voter_data['Year'].astype(str) # Convert Year to string for joining
+    population_voter_data_2012 = rename_columns_by_year(population_voter_data, "2012")
+    population_voter_data_2018 = rename_columns_by_year(population_voter_data, "2018")
+    population_voter_data_final = population_voter_data_2018.merge(population_voter_data_2012, on="State")
+    print("\nLoaded and Processed Population and Voter Data")
+
+    # Create final dataset
+    final_data = farmer_data_final.merge(population_voter_data_final, on="State")
+    print("\nJoined Census data with Population and Voter data")
 
     # Export dataset as excel file
-    census_data_final.to_excel('data/family_farmer_estimates.xlsx', index=False)
-
+    final_data.to_excel('data/family_farmer_estimates.xlsx', index=False)
     print("\nExported rancher dataset as excel file in the data/ directory\n")

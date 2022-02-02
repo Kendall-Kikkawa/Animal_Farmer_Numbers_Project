@@ -1,7 +1,7 @@
 # Rancher Numbers Project (Good Food Institute)
 ---
 
-This project uses data from the U.S. Department of Agriculture (USDA) to estimate the number of ranchers / family_farmers in the United States, by state. Specifically, we compute two estimates of this measure:
+This project uses data from the U.S. Department of Agriculture (USDA) to estimate the number of ranchers / family farmers in the United States, by state. Specifically, we compute two estimates of this measure:
 - Number of family farmers in animal agriculture, including feed commodities
 - Number of family farmers in animal agriculture, exclusing feed commodities
 
@@ -24,7 +24,7 @@ For each state, we computed the share of animal agriculture by (1) including fee
 </p>
 
 
-## NASS Census Data
+### NASS Census Data
 
 The National Agricultural Statistice Service (NASS), which is a subdivision of the USDA, provides census data for various farm and crop operations, for each state (data available [here](https://www.nass.usda.gov/Quick_Stats/CDQT/chapter/1/table/1))
 
@@ -51,34 +51,35 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
 - `nass_usda.xlsx`:
     - Excel file containing the Number of Family Farmers for each state
         - Rows (Granularity): (State, Year) combination
-        - Columns: 
-            - State
-            - Year
-            - Number_of_Family_Farmers
+        - Columns: State, Year, Number_of_Family_Farmers
     - Data file was created manually by extracting values from NASS ([here](https://www.nass.usda.gov/Quick_Stats/CDQT/chapter/1/table/1))
         - Equated the field "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS" with the Number of Family Farmers
     - NASS only has Census data from the years 2012 and 2017
+- `census_population_and_voting.xlsx`:
+    - Excel File containting state-level population and voter estimates from 2018, 2012
+        - Rows (Granularity): (State, Year) combination
+        - Columns: State, Year, Total_population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
+        - Note: voter and population totals are in thousands
+    - The table was manually tweaked to ease the burden of reading and processing the data, but the raw data is available from the U.S. Census Bureau, Current Population Survey, November 2018, and the U.S. Census Bureau, Current Population Survey, November 2012.
+        - The 2018 data can be found ([here](https://www.census.gov/data/tables/time-series/demo/voting-and-registration/p20-583.html)), in table 4a
+        - The 2012 data can be found ([here](https://www.census.gov/data/tables/2012/demo/voting-and-registration/p20-568.html)), in table 4a
+    - The U.S. Census Bureau only has data available every 2 years, so the 2018 data is used as an estimate for the 2017 voter and population numbers
 - `family_farmer_estimates.xlsx`:
-    - Excel file containing the estimates for the number of family farmers involved in animal agriculture (i.e. the file with the relevant estimates)
+    - Excel file containing the estimates for the number of family farmers involved in animal agriculture (**the file with the relevant estimates**)
         - Rows (Granularity): State
         - Columns: 
             - State
-            - Agriculture_share_without_feed_2017
-            - Agriculture_share_with_feed_2017
-            - Number_of_Family_Farmers_2017
-            - Number_of_Animal_Farmers_without_feed_2017
-            - Number_of_Animal_Farmers_with_feed_2017
-            - Agriculture_share_without_feed_2012
-            - Agriculture_share_with_feed_2012
-            - Number_of_Family_Farmers_2012
-            - Number_of_Animal_Farmers_without_feed_2012
-            - Number_of_Animal_Farmers_with_feed_2012
-    - Only contains estimates for the years 2012, 2017, as those are the only years with census data from the NASS
+            - For each of 2017, 2012: Agriculture_share_without_feed, Agriculture_share_with_feed, Number_of_Family_Farmers, Number_of_Animal_Farmers_without_feed, Number_of_Animal_Farmers_with_feed
+            - For each of 2018, 2012: Total_population, Total_Citizen_Population, Total_Registered, Percent_Registered_Total, Total_Registered_Margin_of_Error, Percent_Registered_Citizen, Citizen_Registered_Margin_of_Error, Total_Voted, Percent_Voted_Total, Total_Voted_Margin_of_Error, Percent_Voted_Citizen, Citizen_Voted_Margin_of_Error
+                - Note: voter and population totals are multiplied by 1000 to reflect the true raw values.
+    - Only contains estimates for the years 2012, 2017, as those are the only years with census data from the NASS.
+    - Only contains population and voting figures for the years 2012, 2018, as those are the years closest to the relevant NASS years (2017, 2012).
 
 `compute_ranchers.py`: Python file that performs data cleaning and calculations
 - Reads in `data\ers_usda.xlsx`, calculates agricultural share (with and without feed) for each state
-- Reads in `data\nass_usda.xlsx`, joins this census data with the commdity data from 2012 and 2017
+- Reads in `data\nass_usda.xlsx`, joins this census data with the commdity data from 2017 and 2012
 - Calculates the number of animal farmers (with and without feed)
+- Reads in `data\census_population_and_voting.xlsx`, joins this census data from 2018 and 2012 with the joined data (created in above steps)
 - Writes the estimates to excel file (`data\family_farmer_estimates.xlsx`)
 
 `run.sh`: Bash script that installs necessary libraries (pandas, numpy) and executes `compute_ranchers.py`
