@@ -187,6 +187,7 @@ def update_table(year, value):
     # Drop all other columns
     year_data = year_data.loc[:, ['State', 'code', value]]
     year_data = year_data.sort_values(by=[value], ascending=False)
+    year_data[value] = year_data[value].round(4)
 
     fig = go.Figure()
     fig.add_table(cells=dict(
