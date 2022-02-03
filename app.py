@@ -51,7 +51,7 @@ app.layout = html.Div(
         ),
         # Map Description
         html.Div(
-            children='Select a metric to visualize in the maps below', 
+            children='Select a metric to visualize in the maps below:', 
             style={
                 'textAlign': 'left',
                 'color': 'black',
@@ -107,8 +107,7 @@ app.layout = html.Div(
                 ),
                 html.Label(
                     children = ['  For an overview of the project, and for details on how some of these metrics were calculated, refer to this ', 
-                        html.A('repository', 
-                        href='/https://github.com/Kendall-Kikkawa/GFI_rancher_project'),
+                        dcc.Link('repository', href='https://github.com/Kendall-Kikkawa/GFI_rancher_project'),
                         "."
                     ],
                     style={
@@ -118,8 +117,7 @@ app.layout = html.Div(
                 ),
                 html.Label(
                     children = ['  This project was conducted in collaboration with the ', 
-                        html.A('Good Food Institute', 
-                        href='/https://gfi.org/'),
+                        dcc.Link('Good Food Institute', href='https://gfi.org/'),
                         "."
                     ],
                     style={
