@@ -34,6 +34,7 @@ data['farmers_feed_per_voter'] = data['Farmers_in_animal_ag_feed'] / data['Total
 
 ###### CREATE DASH APPLICATION ######
 app = dash.Dash(__name__)
+server = app.server
 
 app.layout = html.Div( 
     children=[
@@ -122,4 +123,5 @@ def update_output(value):
 ###### END DASH APPLICATION ######
 
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0', port=8050)
+    server.secret_key = os.environ.get('SECRET_KEY’', 'my-secret-key')
+    app.run_server(debug=False)
