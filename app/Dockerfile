@@ -5,8 +5,8 @@ WORKDIR /app
 COPY . .
 
 RUN pip3 install -r requirements.txt
+RUN make /app
 
 EXPOSE 8050
 
-ENTRYPOINT ["python3"]
-CMD ["app.py"]
+CMD python3 app.py

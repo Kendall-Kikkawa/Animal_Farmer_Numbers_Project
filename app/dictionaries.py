@@ -1,7 +1,7 @@
 ###### DICTIONARIES TO MAKE NICER TITLES AND LEGENDS ON THE APP #######
 
 ## Dictionary to map columns to cleaner version of the metric
-titles_Dict = {'Animal_ag_share_no_feed': 'Agriculture Share, Excluding Feed Commodities',
+titles_Dict = { 'Animal_ag_share_no_feed': 'Agriculture Share, Excluding Feed Commodities',
                 'Animal_ag_share_feed': 'Agriclutre Share, Including Feed Commodities',
                 'Number_of_Family_Farmers': 'Family Farmers',
                 'Farmers_in_animal_ag_no_feed': 'Animal Farmers, Excluding Feed Commodities',

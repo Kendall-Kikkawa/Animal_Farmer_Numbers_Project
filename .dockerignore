@@ -1,6 +1,0 @@
-Dockerfile*
-.dockerignore
-README.md
-plots
-Run.sh
-USDA_data_Analysis.ipynb
