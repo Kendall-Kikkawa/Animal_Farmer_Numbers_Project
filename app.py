@@ -42,7 +42,7 @@ app.layout = html.Div(
     children=[
         # Header
         html.H1(
-            children='Map Visualizations for the Rancher Numbers Project',
+            children='Rancher Numbers Dashboard',
             style={
                 'textAlign': 'center',
                 'color': 'white',
