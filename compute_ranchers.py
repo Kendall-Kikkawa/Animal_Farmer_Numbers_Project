@@ -168,14 +168,15 @@ if __name__ == "__main__":
     ### Create New dataset with State Granularity ###
     # Create different version of the dataset that has one line per state and the 2017 numbers in the first set of columns 
     # followed by 2012 numbers
+    farmer_data['Year'] = farmer_data['Year'].astype(str) # Convert Year to string for joining
     farmer_data_2012 = rename_columns_by_year(farmer_data, "2012")
     farmer_data_2017 = rename_columns_by_year(farmer_data, "2017")
     farmer_data_final = farmer_data_2017.merge(farmer_data_2012, on="State")
     
-    # Create different version of the dataset that has one line per state and the 2018 numbers in the first set of columns 
+    # Create different version of the dataset that has one line per state and the 2017 numbers in the first set of columns 
     # followed by 2012 numbers
     population_voter_data_2012 = rename_columns_by_year(population_voter_data, "2012")
-    population_voter_data_2018 = rename_columns_by_year(population_voter_data, "2018")
+    population_voter_data_2018 = rename_columns_by_year(population_voter_data, "2017")
     population_voter_data_final = population_voter_data_2018.merge(population_voter_data_2012, on="State")
 
     # Create final dataset, State Granularity
