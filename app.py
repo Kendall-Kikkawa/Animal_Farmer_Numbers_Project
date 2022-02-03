@@ -15,7 +15,7 @@ from dash import html
 from dictionaries import titles_Dict, legends_Dict
 
 ## Read in cleaned, (State, Year) - level data
-data = pd.read_excel('../data/family_farmer_estimates_state_year_level.xlsx')
+data = pd.read_excel('data/family_farmer_estimates_state_year_level.xlsx')
 data = data[data['State'] != "United States"] # only analyze every state
 data['Year'] = data['Year'].astype(str)
 # Join state codes
