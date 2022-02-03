@@ -202,5 +202,4 @@ def update_table(year, value):
 
 
 if __name__ == '__main__':
-    # server.secret_key = os.environ.get('SECRET_KEY’', 'my-secret-key')
-    app.run_server(debug=True)
+    app.run_server(host='0.0.0.0')
