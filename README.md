@@ -1,17 +1,20 @@
 # Rancher Numbers Project (Good Food Institute)
 ---
+## Overview
 
-This project uses data from the U.S. Department of Agriculture (USDA) to estimate the number of ranchers / family farmers in the United States, by state. Specifically, we compute two estimates of this measure:
+The motiviation for the Rancher Numbers Project is to provide data-based research that can be used to approach politicians about replacing meat products with alternatives. Based on past dicussions, the quantity and distribution of ranchers across the United States is of particular interest. Using data from the U.S. Department of Agriculture (USDA), this project finds an estimate for the number of Ranchers in the U.S., by state. Specifically, we compute two estimates of this measure:
 - Number of family farmers in animal agriculture, including feed commodities
 - Number of family farmers in animal agriculture, exclusing feed commodities
 
 The methods section below further outlines how these values were calculated.
 
+Using data from the U.S. Census Bureau, Current Population Surveys, we also compare these rancher estimates to the population and voter distribution across the U.S. To make the analysis easily digestable, we produce a [dashboard](https://gentle-bastion-68761.herokuapp.com/) to easily interact with the data, and two excel files that contain the rancher estimates, that can be used for future analysis.
+
 ## Methods
 
 ### ERS Commodity Data
 
-The Economic Research Service (ERS), which is a subdivision of the USDA, provides the Annual cash receipts by commodity, for each state (data available [here](https://data.ers.usda.gov/reports.aspx?ID=17832))
+The Economic Research Service (ERS), which is a subdivision of the USDA, reports [Annual cash receipts by commodity](https://data.ers.usda.gov/reports.aspx?ID=17832), for each state.
 
 For each state, we computed the share of animal agriculture by (1) including feed crops and (2) excluding feed crops (both numbers are decimals). The explicit formulas are given below:
 
@@ -26,7 +29,7 @@ For each state, we computed the share of animal agriculture by (1) including fee
 
 ### NASS Census Data
 
-The National Agricultural Statistice Service (NASS), which is a subdivision of the USDA, provides census data for various farm and crop operations, for each state (data available [here](https://www.nass.usda.gov/Quick_Stats/CDQT/chapter/1/table/1))
+The National Agricultural Statistice Service (NASS), which is a subdivision of the USDA, provides [census data](https://www.nass.usda.gov/Quick_Stats/CDQT/chapter/1/table/1) for various farm and crop operations, for each state.
 
 For each state, we estimate the number of family farmers by using the "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS" field in the NASS data. We then multiply this by our previously computed share values to get an estimate for the number of animal farmers in each state.
 
@@ -38,52 +41,48 @@ For each state, we estimate the number of family farmers by using the "FARM OPER
     <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers,&space;with&space;feed}&space;=&space;\text{(Ag.&space;Share,&space;with&space;feed)}&space;*&space;\text{(Num&space;Family&space;Farmers)}" title="\text{Num Animal Farmers, with feed} = \text{(Ag. Share, with feed)} * \text{(Num Family Farmers)}" />
 </p>
 
-## Exporatory Data Analysis
-
-After calculating the above estimates, we visualize visualized the geographic distributions of various metrics of interest, by state. 
-
-### Web App Dashboard
-
-This [dashboard](https://gentle-bastion-68761.herokuapp.com/) provides an interactive way to analyze various metrics in different years. Below, we provide a preview of some important estimates. All of the maps below, and more, are viewable on the dashboard.
-
-### Map Visualizations
-
-To understand the geographic distribution of the number of family farmers in animal agriculture, we visualize the raw number of family farmers in the two plots below, without and with feed, respectively.
+The NASS only provides data from 2017 and 2012, so the plots below display the raw number of family farmers by state, without and with feed, respectively, in those years.
 
 ![](plots/num_farmers_without_feed.png) 
 
 ![](plots/num_farmers_with_feed.png)
 
-To better understand how the number of farmers compares to the overall population in each state, we also visualized the number of farmers per person in each state, via the equation below:
+### Census Bureau CPS Data
+
+To better understand these rancher estimates in context, we compared them to the total populations and the voting populations in each state. The U.S. Census Bureau, Current Population Survey collects data every two years on population and voting totals. Therefore, for our comparison, we used the 2012 CPS data directly, and we used the 2018 CPS data as a proxy for the 2017 totals (since the NASS only has data from 2017). The 2012 data can be found ([here](https://www.census.gov/data/tables/2012/demo/voting-and-registration/p20-568.html)), in table 4a, and the 2018 data can be found ([here](https://www.census.gov/data/tables/time-series/demo/voting-and-registration/p20-583.html)), in table 4a.
+
+To compare the rancher estimates to the total population, we compute rancher estimates, normalized by population size, according to the equation below.
 
 <p align="center">
     <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers&space;per&space;Person}&space;=&space;\frac{\text{Num&space;of&space;Family&space;Farmers}}{\text{Total&space;Population}}" title="\text{Num Animal Farmers per Person} = \frac{\text{Num of Family Farmers}}{\text{Total Population}}" />
 </p>
 
-Again, we visualize this metric when excluding and including feed commodities, respectively.
+Again, we visualize estimate metric when excluding and including feed commodities, in 2012 and 2017.
 
 ![](plots/farmers_per_person_without_feed.png) 
 
 ![](plots/farmers_per_person_with_feed.png)
 
-To better understand how the number of farmers compares to the number of voters in each state, we also visualized the number of farmers per registered voter in each state, via the equation below:
+To compare the rancher estimates to the total number of registered voters, we compute rancher estimates, normalized by registered voters, according to the equation below.
 
 <p align="center">
     <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers&space;per&space;Person}&space;=&space;\frac{\text{Num&space;of&space;Family&space;Farmers}}{\text{Total&space;Registered&space;Voters}}" title="\text{Num Animal Farmers per Person} = \frac{\text{Num of Family Farmers}}{\text{Total Registered Voters}}" />
 </p>
 
-Again, we visualize this metric when excluding and including feed commodities, respectively.
+Again, we visualize estimate metric when excluding and including feed commodities, in 2012 and 2017.
 
 ![](plots/farmers_per_voter_without_feed.png) 
 
 ![](plots/farmers_per_voter_with_feed.png) 
+
+The aforementioned [dashboard](https://gentle-bastion-68761.herokuapp.com/) provides an interactive way to analyze these metrics. All of the maps above (and more) are viewable on the dashboard.
 
 ## Repository Stucture
 
 ### Files for Computing Estimates
 
 #### `data/`
-Folder than contains the following data files
+Folder than contains the following data files (all of the data is publicly available).
 
 - `ers_usda.xlsx`: 
     - Excel file containing the annual cash commodities by state, for years 2012 - 2020. 
@@ -171,7 +170,7 @@ Folder than contains the png files for the plots that are created on the dashboa
 
 ### Computing Estimates
 
-1. Download Python ([here](https://www.python.org/downloads/macos/))
+1. Download ([Python](https://www.python.org))
 2. Download this repository
 3. (Optional) Modify the data files prior to computation (i.e. if method of estimation changes, or new census data becomes available)
 4. Open Terminal/Cmd window on machine, navigate to the directory where you have saved the repository, and run the following command (performs [pandas](https://pandas.pydata.org/), [numpy](https://numpy.org/), and [openpyxl](https://openpyxl.readthedocs.io/en/stable/) downloads)
