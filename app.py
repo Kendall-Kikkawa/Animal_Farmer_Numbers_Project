@@ -114,16 +114,6 @@ app.layout = html.Div(
                         'color': 'black',
                         'backgroundColor': 'white'
                     }
-                ),
-                html.Label(
-                    children = ['  This project was conducted in collaboration with the ', 
-                        dcc.Link('Good Food Institute', href='https://gfi.org/'),
-                        "."
-                    ],
-                    style={
-                        'color': 'black',
-                        'backgroundColor': 'white'
-                    }
                 )
             ]
         )

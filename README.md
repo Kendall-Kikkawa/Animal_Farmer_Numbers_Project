@@ -186,7 +186,9 @@ The interactive dashboard was created using the [pandas](https://pandas.pydata.o
 
 ---
 
-## Contributors:
+## Contributions:
 
-- **Developer**: Kendall Kikkawa
-- **Reserchaers**: Galina Hale, Bruce Friedrich
+**Developer**: Kendall Kikkawa
+**Collaborators**: Galina Hale, Bruce Friedrich
+
+This project was also conducted with collaboration from the [Good Food Institute](https://gfi.org/).
