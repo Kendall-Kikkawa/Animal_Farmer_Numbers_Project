@@ -2,13 +2,14 @@
 
 # DASH WEB APP FOR VISUALIZING RANCHER NUMBERS PROJECT
 # Run this app with `python app.py` and
-# visit http://127.0.0.1:8050/ in your web browser.
+# visit http://0.0.0.0:8050/ in your web browser.
 
 ########################################################
 
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import dash
 from dash import dcc
 from dash import html
@@ -51,7 +52,7 @@ app.layout = html.Div(
         ),
         # Map Description
         html.Div(
-            children='Select a metric to visualize in the maps below:', 
+            children='Select a metric to visualize in the maps and tables below:', 
             style={
                 'textAlign': 'left',
                 'color': 'black',
@@ -64,35 +65,61 @@ app.layout = html.Div(
             options=[{'label': v, 'value': k} for (k, v) in titles_Dict.items()],
             value="Farmers_in_animal_ag_no_feed"
         ),
+        # Map Header
+        html.H2(
+            children='Geographic Distribution',
+            style={
+                'textAlign': 'center',
+                'color': 'white',
+                'backgroundColor': 'darkcyan'
+            }
+        ),
         # Map
         html.Hr(),
         dcc.Graph(
             id='map_figure'
         ),
-        # Map Description
+        # 2012 Table Description Description
+        html.H2(
+            children='Data Table for the selected metric in 2012', 
+            style={
+                'textAlign': 'center',
+                'color': 'white',
+                'backgroundColor': 'darkcyan'
+            }
+        ),
         html.Div(
-            children='Select a year and metric to sort in the table below:', 
+            children='This table displays the same data used to create the 2012 map above, and the metric of interest is sorted in decreasing order.', 
             style={
                 'textAlign': 'left',
                 'color': 'black',
                 'backgroundColor': 'white'
             }
         ),
-        # Table Dropdown for Year
-        dcc.Dropdown(
-            id='table_year_dropdown',
-            options=[{'label': y, 'value': y} for y in ['2017', '2012']],
-            value="2017"
-        ),
-        # Table Dropdown for columns
-        dcc.Dropdown(
-            id='table_value_dropdown',
-            options=[{'label': v, 'value': k} for (k, v) in titles_Dict.items()],
-            value="Farmers_in_animal_ag_no_feed"
-        ),
-        # Table
+        # 2012 Table
         dcc.Graph(
-            id='table_figure'
+            id='table_figure_2012'
+        ),
+        # 2017 Table Description Description
+        html.H2(
+            children='Data Table for the selected metric in 2017', 
+            style={
+                'textAlign': 'center',
+                'color': 'white',
+                'backgroundColor': 'darkcyan'
+            }
+        ),
+        html.Div(
+            children='This table displays the same data  used to create the 2017 map above, and the metric of interest is sorted in decreasing order.', 
+            style={
+                'textAlign': 'left',
+                'color': 'black',
+                'backgroundColor': 'white'
+            }
+        ),
+        # 2017 Table
+        dcc.Graph(
+            id='table_figure_2017'
         ),
         # Bottom Text
         html.Div(
@@ -150,10 +177,10 @@ def update_map(value):
 
 
 @app.callback(
-    dash.dependencies.Output('table_figure', 'figure'),
-    [dash.dependencies.Input('table_year_dropdown', 'value'), 
-    dash.dependencies.Input('table_value_dropdown', 'value')])
-def update_table(year, value):
+    [dash.dependencies.Output('table_figure_2012', 'figure'), 
+    dash.dependencies.Output('table_figure_2017', 'figure')],
+    dash.dependencies.Input('map_dropdown', 'value'))
+def update_table(value):
     """
     Updates the Table based upon the desired quantity to sort on, drops all other columns
     - rearranges table so that sorted table goes 3rd (after State, code)
@@ -164,27 +191,51 @@ def update_table(year, value):
     Returns:
         figure (px.Figure): table to be displayed on the Dash app
     """
-    year_data = data[data['Year'] == year]
-    year_data = year_data.reset_index()
-    year_data = year_data.drop(columns=['Year'])
+    ### Create Data Frame for 2012
+    data_2012 = data[data['Year'] == '2012']
+    data_2012 = data_2012.reset_index()
+    data_2012 = data_2012.drop(columns=['Year'])
     # Shift code and value columns
-    code_col = year_data.pop('code')
-    year_data.insert(1, 'code', code_col)
-    value_col = year_data.pop(value)
-    year_data.insert(2, value, value_col)
+    code_col = data_2012.pop('code')
+    data_2012.insert(1, 'code', code_col)
+    value_col = data_2012.pop(value)
+    data_2012.insert(2, value, value_col)
     # Drop all other columns
-    year_data = year_data.loc[:, ['State', 'code', value]]
-    year_data = year_data.sort_values(by=[value], ascending=False)
-    year_data[value] = year_data[value].round(4)
+    data_2012 = data_2012.loc[:, ['State', 'code', value]]
+    data_2012 = data_2012.sort_values(by=[value], ascending=False)
+    data_2012[value] = data_2012[value].round(4)
 
-    fig = go.Figure()
-    fig.add_table(cells=dict(
-                        values=[year_data[col].tolist() for col in ['State', 'code', value]]
+    ### Create 2012 Table
+    fig_2012 = go.Figure()
+    fig_2012.add_table(cells=dict(
+                        values=[data_2012[col].tolist() for col in ['State', 'code', value]]
                         ), 
-                  header=dict(values=['State', 'State Code', titles_Dict[value]]), 
+                  header=dict(values=['State', 'State Code', titles_Dict[value] + ' in 2012'])
                  )
 
-    return fig
+    ### Create Data Frame for 2017
+    data_2017 = data[data['Year'] == '2017']
+    data_2017 = data_2017.reset_index()
+    data_2017 = data_2017.drop(columns=['Year'])
+    # Shift code and value columns
+    code_col = data_2017.pop('code')
+    data_2017.insert(1, 'code', code_col)
+    value_col = data_2017.pop(value)
+    data_2017.insert(2, value, value_col)
+    # Drop all other columns
+    data_2017 = data_2017.loc[:, ['State', 'code', value]]
+    data_2017 = data_2017.sort_values(by=[value], ascending=False)
+    data_2017[value] = data_2017[value].round(4)
+
+    ### Create 2017 Table
+    fig_2017 = go.Figure()
+    fig_2017.add_table(cells=dict(
+                    values=[data_2017[col].tolist() for col in ['State', 'code', value]]
+                    ), 
+                header=dict(values=['State', 'State Code', titles_Dict[value] + ' in 2017'])
+                )
+
+    return fig_2012, fig_2017
 
 ###### END DASH APPLICATION ######
 
