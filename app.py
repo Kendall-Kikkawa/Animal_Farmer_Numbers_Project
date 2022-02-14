@@ -54,7 +54,7 @@ app.layout = html.Div(
         html.Div(
             children=[
                 html.Label(
-                    children='The motiviation for the Animal Farmers Project is to provide data-based research that can be used to estimate the quantity and distribution of animal farmers across the United States. ', 
+                    children='The motivation for the Animal Farmers Project is to provide data-based research that can be used to estimate the quantity and distribution of animal farmers across the United States. ', 
                     style={
                         'textAlign': 'left',
                         'color': 'black',
