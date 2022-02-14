@@ -43,15 +43,53 @@ app.layout = html.Div(
     children=[
         # Header
         html.H1(
-            children='Rancher Numbers Dashboard',
+            children='Animal Farmers Dashboard',
             style={
                 'textAlign': 'center',
                 'color': 'white',
                 'backgroundColor': 'darkcyan'
             }
         ),
-        # Map Description
+        # Description
         html.Div(
+            children=[
+                html.Label(
+                    children='The motiviation for the Animal Farmers Project is to provide data-based research that can be used to estimate the quantity and distribution of animal farmers across the United States. ', 
+                    style={
+                        'textAlign': 'left',
+                        'color': 'black',
+                        'backgroundColor': 'white'
+                    }
+                ),
+                html.Label(
+                    children = ['Using data from the Economic Research Service of the U.S. Department of Agriculture (', 
+                        dcc.Link('ERS data', href='https://data.ers.usda.gov/reports.aspx?ID=17832'),
+                        ') and the Natural Agricultural Statistics Service of the U.S.D.A. (',
+                        dcc.Link('NASS data', href='https://www.nass.usda.gov/Quick_Stats/CDQT/chapter/1/table/1'),
+                        ') this dashboard displays an estimate for the number of animal farmers in the U.S., by state. Specifically, we compute two estimates of this measure: including and excluding feed commodities. ',
+                        'Using data from the U.S. Census Bureau Current Population Surveys (',
+                        dcc.Link('2018 CPS', href='https://www.census.gov/data/tables/time-series/demo/voting-and-registration/p20-583.html'),
+                        ', ',
+                        dcc.Link('2012 CPS', href='https://www.census.gov/data/tables/2012/demo/voting-and-registration/p20-568.html'),
+                        '), the dashboard also compares the animal farmer estimates to the population and voter distribution across the U.S. by displaying the distribution of farmers per person, and per voter.'
+                    ],
+                    style={
+                        'color': 'black',
+                        'backgroundColor': 'white'
+                    }
+                )  
+            ]
+        ),        
+        # Map Dropdown
+        html.Div(
+            children='_', 
+            style={
+                'textAlign': 'left',
+                'color': 'white',
+                'backgroundColor': 'white'
+            }
+        ),
+        html.H4(
             children='Select a metric to visualize in the maps and tables below:', 
             style={
                 'textAlign': 'left',
@@ -59,7 +97,6 @@ app.layout = html.Div(
                 'backgroundColor': 'white'
             }
         ),
-        # Map Dropdown
         dcc.Dropdown(
             id='map_dropdown',
             options=[{'label': v, 'value': k} for (k, v) in titles_Dict.items()],
@@ -67,7 +104,7 @@ app.layout = html.Div(
         ),
         # Map Header
         html.H2(
-            children='Geographic Distribution',
+            children='Geographic Distribution of the selected metric',
             style={
                 'textAlign': 'center',
                 'color': 'white',
@@ -81,7 +118,7 @@ app.layout = html.Div(
         ),
         # 2012 Table Description Description
         html.H2(
-            children='Data Table for the selected metric in 2012', 
+            children='Data Tables for the selected metric', 
             style={
                 'textAlign': 'center',
                 'color': 'white',
@@ -89,63 +126,47 @@ app.layout = html.Div(
             }
         ),
         html.Div(
-            children='This table displays the same data used to create the 2012 map above, and the metric of interest is sorted in decreasing order.', 
+            children='This table displays the same data used to create the maps above, and the metric of interest is sorted in decreasing order.', 
             style={
                 'textAlign': 'left',
                 'color': 'black',
                 'backgroundColor': 'white'
             }
         ),
-        # 2012 Table
-        dcc.Graph(
-            id='table_figure_2012'
-        ),
-        # 2017 Table Description Description
-        html.H2(
-            children='Data Table for the selected metric in 2017', 
-            style={
-                'textAlign': 'center',
-                'color': 'white',
-                'backgroundColor': 'darkcyan'
-            }
-        ),
-        html.Div(
-            children='This table displays the same data  used to create the 2017 map above, and the metric of interest is sorted in decreasing order.', 
-            style={
-                'textAlign': 'left',
-                'color': 'black',
-                'backgroundColor': 'white'
-            }
-        ),
-        # 2017 Table
-        dcc.Graph(
-            id='table_figure_2017'
-        ),
+        html.Div([ 
+            html.H3('2012', 
+                style={
+                    'width': '50%',  
+                    'display': 'inline-block',
+                    'textAlign': 'center'}),
+            html.H3('2017', 
+                style={
+                    'width': '50%',  
+                    'display': 'inline-block',
+                    'textAlign': 'center'}),
+            html.Div(children=dcc.Graph(id='table_figure_2012'), 
+                style={
+                    'width': '50%',  
+                    'display': 'inline-block'}),
+            html.Div(children=dcc.Graph(id='table_figure_2017'), 
+                style={
+                    'width': '50%', 
+                    'display': 'inline-block'}),
+        ]),
         # Bottom Text
-        html.Div(
-            children=[
-                html.Label(
-                    children='The data used to generate these maps is public available through the U.S. Department of Agriculture and the U.S. Census Bureau.', 
-                    style={
-                        'textAlign': 'left',
-                        'color': 'black',
-                        'backgroundColor': 'white'
-                    }
-                ),
-                html.Label(
-                    children = ['  For an overview of the project, and for details on how some of these metrics were calculated, refer to this ', 
-                        dcc.Link('repository', href='https://github.com/Kendall-Kikkawa/GFI_rancher_project'),
-                        "."
-                    ],
-                    style={
-                        'color': 'black',
-                        'backgroundColor': 'white'
-                    }
-                )
-            ]
+        html.Label(
+            children = ['For additional details on this project and on how some of these metrics were calculated, refer to this ', 
+                dcc.Link('repository', href='https://github.com/Kendall-Kikkawa/GFI_rancher_project'),
+                "."
+            ],
+            style={
+                'color': 'black',
+                'backgroundColor': 'white'
+            }
         )
     ]
 )
+
 
 @app.callback(
     dash.dependencies.Output('map_figure', 'figure'),

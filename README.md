@@ -1,14 +1,14 @@
-# Rancher Numbers Project (Good Food Institute)
+# Animal Farmers Project (Good Food Institute)
 ---
 ## Overview
 
-The motiviation for the Rancher Numbers Project is to provide data-based research that can be used to approach politicians about replacing meat products with alternatives. Based on past dicussions, the quantity and distribution of ranchers across the United States is of particular interest. Using data from the U.S. Department of Agriculture (USDA), this project finds an estimate for the number of Ranchers in the U.S., by state. Specifically, we compute two estimates of this measure:
+The motiviation for the Animal Farmers Project is to provide data-based research that can be used to approach politicians about replacing meat products with alternatives. Based on past dicussions, the quantity and distribution of animal farmers across the United States is of particular interest. Using data from the U.S. Department of Agriculture (USDA), this project finds an estimate for the number of animal farmers in the U.S., by state. Specifically, we compute two estimates of this measure:
 - Number of family farmers in animal agriculture, including feed commodities
 - Number of family farmers in animal agriculture, exclusing feed commodities
 
 The methods section below further outlines how these values were calculated.
 
-Using data from the U.S. Census Bureau, Current Population Surveys, we also compare these rancher estimates to the population and voter distribution across the U.S. To make the analysis easily digestable, we produce a [dashboard](https://gentle-bastion-68761.herokuapp.com/) to easily interact with the data, and two excel files that contain the rancher estimates, that can be used for future analysis.
+Using data from the U.S. Census Bureau, Current Population Surveys, we also compare these farmer estimates to the population and voter distribution across the U.S. To make the analysis easily digestable, we produce a [dashboard](https://gentle-bastion-68761.herokuapp.com/) to easily interact with the data, and two excel files that contain the animal farmer estimates, that can be used for future analysis.
 
 ## Methods
 
@@ -49,9 +49,9 @@ The NASS only provides data from 2017 and 2012, so the plots below display the r
 
 ### Census Bureau CPS Data
 
-To better understand these rancher estimates in context, we compared them to the total populations and the voting populations in each state. The U.S. Census Bureau, Current Population Survey collects data every two years on population and voting totals. Therefore, for our comparison, we used the 2012 CPS data directly, and we used the 2018 CPS data as a proxy for the 2017 totals (since the NASS only has data from 2017). The 2012 data can be found ([here](https://www.census.gov/data/tables/2012/demo/voting-and-registration/p20-568.html)), in table 4a, and the 2018 data can be found ([here](https://www.census.gov/data/tables/time-series/demo/voting-and-registration/p20-583.html)), in table 4a.
+To better understand these farmer estimates in context, we compared them to the total populations and the voting populations in each state. The U.S. Census Bureau, Current Population Survey collects data every two years on population and voting totals. Therefore, for our comparison, we used the 2012 CPS data directly, and we used the 2018 CPS data as a proxy for the 2017 totals (since the NASS only has data from 2017). The 2012 data can be found ([here](https://www.census.gov/data/tables/2012/demo/voting-and-registration/p20-568.html)), in table 4a, and the 2018 data can be found ([here](https://www.census.gov/data/tables/time-series/demo/voting-and-registration/p20-583.html)), in table 4a.
 
-To compare the rancher estimates to the total population, we compute rancher estimates, normalized by population size, according to the equation below.
+To compare the farmer estimates to the total population, we compute farmer estimates, normalized by population size, according to the equation below.
 
 <p align="center">
     <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers&space;per&space;Person}&space;=&space;\frac{\text{Num&space;of&space;Family&space;Farmers}}{\text{Total&space;Population}}" title="\text{Num Animal Farmers per Person} = \frac{\text{Num of Family Farmers}}{\text{Total Population}}" />
@@ -63,7 +63,7 @@ Again, we visualize estimate metric when excluding and including feed commoditie
 
 ![](plots/farmers_per_person_with_feed.png)
 
-To compare the rancher estimates to the total number of registered voters, we compute rancher estimates, normalized by registered voters, according to the equation below.
+To compare the farmer estimates to the total number of registered voters, we compute farmer estimates, normalized by registered voters, according to the equation below.
 
 <p align="center">
     <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers&space;per&space;Person}&space;=&space;\frac{\text{Num&space;of&space;Family&space;Farmers}}{\text{Total&space;Registered&space;Voters}}" title="\text{Num Animal Farmers per Person} = \frac{\text{Num of Family Farmers}}{\text{Total Registered Voters}}" />
@@ -130,7 +130,7 @@ Folder than contains the following data files (all of the data is publicly avail
     - Only contains estimates for the years 2012, 2017, as those are the only years with census data from the NASS.
     - Only contains population and voting figures for the years 2012, 2018, as those are the years closest to the relevant NASS years (2017, 2012).
 
-#### `compute_ranchers.py`
+#### `compute_animal_farmers.py`
 Python file that performs data cleaning and calculations
 
 - Reads in `data\ers_usda.xlsx`, calculates agricultural share (with and without feed) for each state
@@ -140,7 +140,7 @@ Python file that performs data cleaning and calculations
 - Writes the estimates to excel files (`data\family_farmer_estimates_state_year_level.xlsx`, `data\family_farmer_estimates_state_level.xlsx`)
 
 #### `run.sh`
-Bash script that installs necessary libraries (pandas, numpy, openpyxl) and executes `compute_ranchers.py`
+Bash script that installs necessary libraries (pandas, numpy, openpyxl) and executes `compute_animal_farmers.py`
 
 ### Files related to the Web App Dashboard
 
