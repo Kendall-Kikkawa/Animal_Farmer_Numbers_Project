@@ -2,7 +2,7 @@
 ---
 ## Overview
 
-The motiviation for the Animal Farmers Project is to provide data-based research that can be used to approach politicians about replacing meat products with alternatives. Based on past dicussions, the quantity and distribution of animal farmers across the United States is of particular interest. Using data from the U.S. Department of Agriculture (USDA), this project finds an estimate for the number of animal farmers in the U.S., by state. Specifically, we compute two estimates of this measure:
+The motivation for the Animal Farmers Project is to provide data-based research that can be used to approach politicians about replacing meat products with alternatives. Based on past dicussions, the quantity and distribution of animal farmers across the United States is of particular interest. Using data from the U.S. Department of Agriculture (USDA), this project finds an estimate for the number of animal farmers in the U.S., by state. Specifically, we compute two estimates of this measure:
 - Number of family farmers in animal agriculture, including feed commodities
 - Number of family farmers in animal agriculture, exclusing feed commodities
 
