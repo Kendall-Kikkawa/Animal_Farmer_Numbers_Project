@@ -1,15 +1,15 @@
 ########################################################
 
 # DASH WEB APP FOR VISUALIZING RANCHER NUMBERS PROJECT
-# Run this app with `python app.py` and
+# Run this app with `python3 app.py` and
 # visit http://0.0.0.0:8050/ in your web browser.
 
 ########################################################
 
+from turtle import width
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 import dash
 from dash import dcc
 from dash import html
@@ -47,50 +47,76 @@ app.layout = html.Div(
             style={
                 'textAlign': 'center',
                 'color': 'white',
-                'backgroundColor': 'darkcyan'
+                'backgroundColor': 'darkcyan',
+                "padding-top": "10px",
+                "padding-bottom": "10px",
             }
         ),
         # Description
+        html.H2(
+            children='Project Overview',
+            style={
+                'textAlign': 'left',
+                'color': 'Black',
+                'backgroundColor': 'white',
+                'margin-top': '3px',
+                'margin-bottom': '3px'
+            }
+        ),
         html.Div(
             children=[
                 html.Label(
-                    children='The motivation for the Animal Farmers Project is to provide data-based research that can be used to estimate the quantity and distribution of animal farmers across the United States. ', 
-                    style={
-                        'textAlign': 'left',
-                        'color': 'black',
-                        'backgroundColor': 'white'
-                    }
-                ),
-                html.Label(
-                    children = ['Using data from the Economic Research Service of the U.S. Department of Agriculture (', 
+                    children = [
+                        'This dashboard provides estimates of the number of individuals and family-owned farmers involved in animal agriculture by U.S. state in 2012 and 2017. ',
+                        'The data used com from multiple sources: the Economic Research Service of the U.S. Department of Agriculture (', 
                         dcc.Link('ERS data', href='https://data.ers.usda.gov/reports.aspx?ID=17832'),
-                        ') and the Natural Agricultural Statistics Service of the U.S.D.A. (',
+                        ')  the Natural Agricultural Statistics Service of the U.S.D.A. (',
                         dcc.Link('NASS data', href='https://www.nass.usda.gov/Quick_Stats/CDQT/chapter/1/table/1'),
-                        ') this dashboard displays an estimate for the number of animal farmers in the U.S., by state. Specifically, we compute two estimates of this measure: including and excluding feed commodities. ',
-                        'Using data from the U.S. Census Bureau Current Population Surveys (',
+                        ') and the U.S. Census Bureau Current Population Surveys (',
                         dcc.Link('2018 CPS', href='https://www.census.gov/data/tables/time-series/demo/voting-and-registration/p20-583.html'),
                         ', ',
                         dcc.Link('2012 CPS', href='https://www.census.gov/data/tables/2012/demo/voting-and-registration/p20-568.html'),
-                        '), the dashboard also compares the animal farmer estimates to the population and voter distribution across the U.S. by displaying the distribution of farmers per person, and per voter.'
+                        '). The dashboard computes two estimates of this measure: including and excluding feed commodities.'
                     ],
-                    style={
-                        'color': 'black',
-                        'backgroundColor': 'white'
-                    }
-                )  
-            ]
-        ),        
-        # Map Dropdown
-        html.Div(
-            children='_', 
+                ),
+                html.Div(
+                    children=[
+                        ' ',
+                        html.Br(),
+                        'We made the following proportionality assumptions due to the lack of specific data:',
+                        dcc.Markdown('''
+                                    1. Ratio of animal agriculture revenue in total agriculture revenue in the state is proportional to that ratio among individual and family farmers.
+                                    2. Proportion of individual and family farmers that vote is the same as average in the state.
+                                    3. We count each individual and family farm as ONE person - if you believe that the right number is N>1, multiply all reported numbers for family farmers by N.
+                                '''),
+                        html.Label(
+                            children = ['For additional details on this project and on how some of these metrics were calculated, refer to the ', 
+                                dcc.Link('project repository', href='https://github.com/Kendall-Kikkawa/GFI_rancher_project'),
+                                "."
+                            ]
+                        )
+                    ]
+                )
+            ],
             style={
-                'textAlign': 'left',
-                'color': 'white',
-                'backgroundColor': 'white'
+                'color': 'black',
+                'display': 'inline-block',
+                'backgroundColor': 'ghostwhite',
+                "padding-top": "15px",
+                "padding-bottom": "15px",
             }
         ),
-        html.H4(
-            children='Select a metric to visualize in the maps and tables below:', 
+        html.Div('_',
+            style={
+                    'color': 'white',
+                    'display': 'inline-block',
+                    'backgroundColor': 'white'
+                }
+        ),
+        html.Hr(),        
+        # Map Dropdown
+        html.H2(
+            children='Select a metric to visualize in the maps and tables below', 
             style={
                 'textAlign': 'left',
                 'color': 'black',
@@ -102,74 +128,118 @@ app.layout = html.Div(
             options=[{'label': v, 'value': k} for (k, v) in titles_Dict.items()],
             value="Farmers_in_animal_ag_no_feed"
         ),
-        # Map Header
-        html.H2(
-            children='Geographic Distribution of the selected metric',
-            style={
-                'textAlign': 'center',
-                'color': 'white',
-                'backgroundColor': 'darkcyan'
-            }
-        ),
-        # Map
-        html.Hr(),
-        dcc.Graph(
-            id='map_figure'
-        ),
-        # 2012 Table Description Description
-        html.H2(
-            children='Data Tables for the selected metric', 
-            style={
-                'textAlign': 'center',
-                'color': 'white',
-                'backgroundColor': 'darkcyan'
-            }
-        ),
         html.Div(
-            children='This table displays the same data used to create the maps above, and the metric of interest is sorted in decreasing order.', 
+            children='_', 
+            style={
+                'textAlign': 'left',
+                'color': 'white',
+                'backgroundColor': 'white'
+            }
+        ),
+        html.Hr(),
+        # 2017 Header
+        html.H2(
+            children=[
+                'Distribution of ',
+                html.Div(id='selected_metric_2017'),
+                ' by state in 2017'],
             style={
                 'textAlign': 'left',
                 'color': 'black',
-                'backgroundColor': 'white'
+                'backgroundColor': 'white',
+                'margin-top': '10px',
+                'margin-bottom': '3px'
             }
         ),
+        # 2017 Map and Table
         html.Div([ 
-            html.H3('2012', 
+            html.Div(children=dcc.Graph(id='map_figure_2017',
+                                        figure={"layout": {"height": 355}}), 
                 style={
-                    'width': '50%',  
+                    'width': '48%',
+                    'height': '100%',
                     'display': 'inline-block',
-                    'textAlign': 'center'}),
-            html.H3('2017', 
+                    "padding-left": "5px",
+                    "padding-right": "5px",
+                    "padding-top": '2px',
+                    "padding-bottom": '2px'}),
+            html.Div(children=dcc.Graph(id='table_figure_2017',
+                                        figure={"layout": {"height": 355}}),
                 style={
-                    'width': '50%',  
+                    'width': '48%',
+                    'height': '100%',
                     'display': 'inline-block',
-                    'textAlign': 'center'}),
-            html.Div(children=dcc.Graph(id='table_figure_2012'), 
-                style={
-                    'width': '50%',  
-                    'display': 'inline-block'}),
-            html.Div(children=dcc.Graph(id='table_figure_2017'), 
-                style={
-                    'width': '50%', 
-                    'display': 'inline-block'}),
-        ]),
-        # Bottom Text
-        html.Label(
-            children = ['For additional details on this project and on how some of these metrics were calculated, refer to this ', 
-                dcc.Link('repository', href='https://github.com/Kendall-Kikkawa/GFI_rancher_project'),
-                "."
-            ],
+                    "padding-left": "5px",
+                    "padding-right": "5px",
+                    "padding-top": '2px',
+                    }),
+        ],
+        style={
+            'textAlign': 'center'
+        }),
+        # 2012 Header
+        html.H2(
+            children=[
+                'Distribution of ',
+                html.Div(id='selected_metric_2012'),
+                ' by state in 2012'],
             style={
+                'textAlign': 'left',
                 'color': 'black',
-                'backgroundColor': 'white'
+                'backgroundColor': 'white',
+                'margin-top': '3px',
+                'margin-bottom': '3px'
             }
-        )
+        ),
+        # 2012 Map and Table
+        html.Div([ 
+            html.Div(children=dcc.Graph(id='map_figure_2012',
+                                        figure={"layout": {"height": 355}}), 
+                style={
+                    'width': '48%',
+                    'height': '100%',
+                    'display': 'inline-block',
+                    "padding-left": "5px",
+                    "padding-right": "5px",
+                    "padding-top": '2px'}),
+            html.Div(children=dcc.Graph(id='table_figure_2012',
+                                        figure={"layout": {"height": 355}}), 
+                style={
+                    'width': '48%',
+                    'height': '100%',
+                    'display': 'inline-block',
+                    "padding-left": "5px",
+                    "padding-right": "5px",
+                    "padding-top": '2px'}),
+        ],
+        style={
+            'textAlign': 'center'
+        })
     ]
 )
 
 
 @app.callback(
-    dash.dependencies.Output('map_figure', 'figure'),
+    dash.dependencies.Output('selected_metric_2017', 'children'),
+    dash.dependencies.Output('selected_metric_2012', 'children'),
+    [dash.dependencies.Input('metric_string', 'value')]
+)
+def get_metric(value):
+    """Gets selected metric to update titles for maps and tables
+
+    Args:
+        value (string): String describing the metric to be plotted
+
+    Returns:
+        (string): Clean version of string describing the metric to be plotted, unique for 2017 plots
+        (string): Clean version of string describing the metric to be plotted, unique for 2012 plots
+    """
+    return titles_Dict[value], titles_Dict[value]
+
+
+@app.callback(
+    dash.dependencies.Output('map_figure_2012', 'figure'),
+    dash.dependencies.Output('map_figure_2017', 'figure'),
     [dash.dependencies.Input('map_dropdown', 'value')])
 def update_map(value):
     """
@@ -180,21 +250,40 @@ def update_map(value):
         value (string): String describing the metric to be plotted
 
     Returns:
-        figure (px.Figure): figure to be displayed on the Dash app
+        map_figure_2012 (px.Figure): 2012 map to be displayed on the Dash app
+        map_figure_2017 (px.Figure): 2017 map to be displayed on the Dash app
     """
-    fig = px.choropleth(data,
+    # 2012 Map
+    data_2012 = data[data['Year'] == '2012']
+    fig_2012 = px.choropleth(data_2012,
         locations = 'code', # State Code for spatial coordinates
         color = value, # Data to be color-coded
-        facet_col='Year',
         locationmode = 'USA-states', # set of locations match entries in `locations`
         scope='usa',
-        title=titles_Dict[value],
         labels={
             value: legends_Dict[value]
         },
-        color_continuous_scale="speed"
+        color_continuous_scale="speed",
     )
-    return fig
+    fig_2012.update_layout(margin=dict(r=10, l=10, t=10, b=10),
+                            paper_bgcolor="ghostwhite")
+
+    # 2017 Map
+    data_2017 = data[data['Year'] == '2012']
+    fig_2017 = px.choropleth(data_2017,
+        locations = 'code', # State Code for spatial coordinates
+        color = value, # Data to be color-coded
+        locationmode = 'USA-states', # set of locations match entries in `locations`
+        scope='usa',
+        labels={
+            value: legends_Dict[value]
+        },
+        color_continuous_scale="speed",
+    )
+    fig_2017.update_layout(margin=dict(r=10, l=10, t=10, b=10),
+                            paper_bgcolor="ghostwhite")
+
+    return fig_2012, fig_2017
 
 
 @app.callback(
@@ -210,7 +299,8 @@ def update_table(value):
         value (string): String describing the metric to be plotted
 
     Returns:
-        figure (px.Figure): table to be displayed on the Dash app
+        table_figure_2012 (px.Figure): 2012 table to be displayed on the Dash app
+        table_figure_2017 (px.Figure): 2017 table to be displayed on the Dash app
     """
     ### Create Data Frame for 2012
     data_2012 = data[data['Year'] == '2012']
@@ -229,10 +319,15 @@ def update_table(value):
     ### Create 2012 Table
     fig_2012 = go.Figure()
     fig_2012.add_table(cells=dict(
-                        values=[data_2012[col].tolist() for col in ['State', 'code', value]]
+                            values=[data_2012[col].tolist() for col in ['State', 'code', value]]
                         ), 
-                  header=dict(values=['State', 'State Code', titles_Dict[value] + ' in 2012'])
+                        header=dict(
+                            values=['State', 'State Code', titles_Dict[value] + ' in 2012']
+                        ),
+                        columnwidth=[0.23, 0.12, 0.65]
                  )
+    fig_2012.update_layout(margin=dict(r=10, l=10, t=10, b=10),
+                            paper_bgcolor="ghostwhite")
 
     ### Create Data Frame for 2017
     data_2017 = data[data['Year'] == '2017']
@@ -251,10 +346,15 @@ def update_table(value):
     ### Create 2017 Table
     fig_2017 = go.Figure()
     fig_2017.add_table(cells=dict(
-                    values=[data_2017[col].tolist() for col in ['State', 'code', value]]
-                    ), 
-                header=dict(values=['State', 'State Code', titles_Dict[value] + ' in 2017'])
+                            values=[data_2017[col].tolist() for col in ['State', 'code', value]]
+                        ), 
+                        header=dict(
+                            values=['State', 'State Code', titles_Dict[value] + ' in 2017']
+                        ),
+                        columnwidth=[0.23, 0.12, 0.65]
                 )
+    fig_2017.update_layout(margin=dict(r=10, l=10, t=10, b=10),
+                            paper_bgcolor="ghostwhite")
 
     return fig_2012, fig_2017
 
