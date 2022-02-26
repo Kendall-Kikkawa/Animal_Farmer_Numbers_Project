@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 import dash
 from dash import dcc
 from dash import html
-from dictionaries import titles_Dict, legends_Dict
+from dictionaries import *
 
 ## Read in cleaned, (State, Year) - level data
 data = pd.read_excel('data/family_farmer_estimates_state_year_level.xlsx')
@@ -102,9 +102,10 @@ app.layout = html.Div(
             style={
                 'color': 'black',
                 'display': 'inline-block',
-                'backgroundColor': 'white', #'ghostwite'
+                'fontSize': '18px',
+                'backgroundColor': 'white',
                 "padding-top": "10px",
-                "padding-bottom": "15px",
+                "padding-bottom": "10px",
             }
         ),
         html.Hr(),        
@@ -123,106 +124,146 @@ app.layout = html.Div(
         dcc.Dropdown(
             id='map_dropdown',
             options=[{'label': v, 'value': k} for (k, v) in titles_Dict.items()],
-            value="Farmers_in_animal_ag_no_feed"
-        ),
-        html.Div(
-            children='_', 
+            value="Animal_ag_share_no_feed",
             style={
                 'textAlign': 'left',
-                'color': 'white',
-                'backgroundColor': 'white'
+                'color': 'black',
+                'backgroundColor': 'white',
+                'margin-bottom': '15px'
+            }
+        ),
+        ### Data Source
+        html.Div(
+            children=[
+                html.Label(
+                    'Data Source(s):  ', 
+                    style={
+                        'fontSize': '20px',
+                        "font-weight": "bold",
+                    }
+                ),
+                html.Label(
+                    '_', 
+                    style={
+                        "color": "white",
+                    }
+                ),
+                html.Label(
+                    id='metric_data_source',
+                    style={
+                        'fontSize': '18px',
+                    }
+                )
+            ],
+            style={
+                'textAlign': 'left',
+                'color': 'black',
+                'backgroundColor': 'white',
+                'margin-bottom': '10px'
+            }
+        ),
+        ### Calculation
+        html.Div(
+            children=[
+                html.Label(
+                    children='Calculation: ', 
+                    style={
+                        'fontSize': '20px',
+                        "font-weight": "bold",
+                    }
+                ),
+                html.Label(
+                    children='_', 
+                    style={
+                        "color": "white",
+                    }
+                ),
+                html.Label(
+                    id='metric_calculation',
+                    style={
+                        'fontSize': '18px',
+                    }
+                )
+            ],
+            style={
+                'textAlign': 'left',
+                'color': 'black',
+                'backgroundColor': 'white',
+                'margin-bottom': '15px'
             }
         ),
         html.Hr(),
-        # 2017 Header
-        html.Div(
-            html.Label(
-                children=['2017: Distribution of ', html.Label(id='selected_metric_2017'), ' by state'],
-            ),
+        html.Label(
+            ['Distribution of ', html.Label(id='selected_metric'), ' by State'],
             style={
-                'textAlign': 'center',
+                'textAlign': 'left',
                 'color': 'black',
                 'fontSize': '21px',
                 "font-weight": "bold",
                 'backgroundColor': 'white',
                 'margin-top': '3px',
-                'margin-bottom': '2px'
+                'margin-bottom': '4px'
             }
         ),
         # 2017 Map and Table
         html.Div([ 
             html.Div(children=dcc.Graph(id='map_figure_2017',
-                                        figure={"layout": {"height": 340}}), 
+                                        figure={"layout": {"height": 300}}), 
                 style={
                     'width': '48%',
                     'height': '100%',
-                    'display': 'inline-block',
-                    "padding-left": "5px",
-                    "padding-right": "5px",
-                    "padding-top": '2px',
-                    "padding-bottom": '2px'}),
+                    'display': 'inline-block'
+                    }
+            ),
             html.Div(children=dcc.Graph(id='table_figure_2017',
-                                        figure={"layout": {"height": 340}}),
+                                        figure={"layout": {"height": 300}}),
                 style={
                     'width': '48%',
                     'height': '100%',
-                    'display': 'inline-block',
-                    "padding-left": "5px",
-                    "padding-right": "5px",
-                    "padding-top": '2px',
-                    }),
+                    'display': 'inline-block'
+                    }
+                ),
         ],
         style={
-            'textAlign': 'center'
+            'textAlign': 'center',
+            "padding-left": "5px",
+            "padding-right": "5px",
+            "padding-top": '2px',
+            "padding-bottom": '2px'
         }),
-        # 2012 Header
-        html.Div(
-            html.Label(
-                children=['2012: Distribution of ', html.Label(id='selected_metric_2012'), ' by state'],
-            ),
-            style={
-                'textAlign': 'center',
-                'color': 'black',
-                'fontSize': '21px',
-                "font-weight": "bold",
-                'backgroundColor': 'white',
-                'margin-top': '4px',
-                'margin-bottom': '2px'
-            }
-        ),
         # 2012 Map and Table
         html.Div([ 
             html.Div(children=dcc.Graph(id='map_figure_2012',
-                                        figure={"layout": {"height": 340}}), 
+                                        figure={"layout": {"height": 300}}), 
                 style={
                     'width': '48%',
                     'height': '100%',
-                    'display': 'inline-block',
-                    "padding-left": "5px",
-                    "padding-right": "5px",
-                    "padding-top": '2px',
-                    "padding-bottom": '0px'}),
+                    'display': 'inline-block'}
+                ),
             html.Div(children=dcc.Graph(id='table_figure_2012',
-                                        figure={"layout": {"height": 340}}), 
+                                        figure={"layout": {"height": 300}}), 
                 style={
                     'width': '48%',
                     'height': '100%',
-                    'display': 'inline-block',
-                    "padding-left": "5px",
-                    "padding-right": "5px",
-                    "padding-top": '2px',
-                    "padding-bottom": '0px'}),
+                    'display': 'inline-block'
+                    }
+                ),
         ],
         style={
-            'textAlign': 'center'
+            'textAlign': 'center',
+            "padding-left": "5px",
+            "padding-right": "5px",
+            "padding-top": '2px',
+            "padding-bottom": '0px'
         })
     ]
 )
 
 
 @app.callback(
-    dash.dependencies.Output('selected_metric_2017', 'children'),
-    dash.dependencies.Output('selected_metric_2012', 'children'),
+    dash.dependencies.Output('metric_data_source', 'children'),
+    dash.dependencies.Output('metric_calculation', 'children'),
+    dash.dependencies.Output('selected_metric', 'children'),
     [dash.dependencies.Input('map_dropdown', 'value')]
 )
 def get_metric(value):
@@ -232,10 +273,11 @@ def get_metric(value):
         value (string): String describing the metric to be plotted
 
     Returns:
-        (string): Clean version of string describing the metric to be plotted, unique for 2017 plots
-        (string): Clean version of string describing the metric to be plotted, unique for 2012 plots
+        (string): Clean version of string describing the metric to be plotted
+        (string): Data used to compute the selected metric
+        (string): Equation for computing the selected metric 
     """
-    return titles_Dict[value], titles_Dict[value]
+    return dataSources_Dict[value], calculations_Dict[value], titles_Dict[value]
 
 
 @app.callback(
@@ -264,9 +306,10 @@ def update_map(value):
         labels={
             value: legends_Dict[value]
         },
+        title='2012',
         color_continuous_scale="speed",
     )
-    fig_2012.update_layout(margin=dict(r=10, l=10, t=10, b=10),
+    fig_2012.update_layout(margin=dict(r=10, l=10, t=50, b=10),
                             paper_bgcolor="ghostwhite")
 
     # 2017 Map
@@ -279,9 +322,10 @@ def update_map(value):
         labels={
             value: legends_Dict[value]
         },
+        title='2017',
         color_continuous_scale="speed",
     )
-    fig_2017.update_layout(margin=dict(r=10, l=10, t=10, b=10),
+    fig_2017.update_layout(margin=dict(r=10, l=10, t=50, b=10),
                             paper_bgcolor="ghostwhite")
 
     return fig_2012, fig_2017
