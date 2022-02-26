@@ -6,7 +6,6 @@
 
 ########################################################
 
-from turtle import width
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -53,14 +52,16 @@ app.layout = html.Div(
             }
         ),
         # Description
-        html.H2(
+        html.Div(
             children='Project Overview',
             style={
                 'textAlign': 'left',
                 'color': 'Black',
+                'fontSize': '21px',
+                "font-weight": "bold",
                 'backgroundColor': 'white',
                 'margin-top': '3px',
-                'margin-bottom': '3px'
+                'margin-bottom': '0px'
             }
         ),
         html.Div(
@@ -101,26 +102,22 @@ app.layout = html.Div(
             style={
                 'color': 'black',
                 'display': 'inline-block',
-                'backgroundColor': 'ghostwhite',
-                "padding-top": "15px",
+                'backgroundColor': 'white', #'ghostwite'
+                "padding-top": "10px",
                 "padding-bottom": "15px",
             }
         ),
-        html.Div('_',
-            style={
-                    'color': 'white',
-                    'display': 'inline-block',
-                    'backgroundColor': 'white'
-                }
-        ),
         html.Hr(),        
         # Map Dropdown
-        html.H2(
+        html.Div(
             children='Select a metric to visualize in the maps and tables below', 
             style={
                 'textAlign': 'left',
                 'color': 'black',
-                'backgroundColor': 'white'
+                'fontSize': '21px',
+                "font-weight": "bold",
+                'backgroundColor': 'white',
+                'margin-bottom': '15px'
             }
         ),
         dcc.Dropdown(
@@ -138,23 +135,24 @@ app.layout = html.Div(
         ),
         html.Hr(),
         # 2017 Header
-        html.H2(
-            children=[
-                'Distribution of ',
-                html.Div(id='selected_metric_2017'),
-                ' by state in 2017'],
+        html.Div(
+            html.Label(
+                children=['2017: Distribution of ', html.Label(id='selected_metric_2017'), ' by state'],
+            ),
             style={
-                'textAlign': 'left',
+                'textAlign': 'center',
                 'color': 'black',
+                'fontSize': '21px',
+                "font-weight": "bold",
                 'backgroundColor': 'white',
-                'margin-top': '10px',
-                'margin-bottom': '3px'
+                'margin-top': '3px',
+                'margin-bottom': '2px'
             }
         ),
         # 2017 Map and Table
         html.Div([ 
             html.Div(children=dcc.Graph(id='map_figure_2017',
-                                        figure={"layout": {"height": 355}}), 
+                                        figure={"layout": {"height": 340}}), 
                 style={
                     'width': '48%',
                     'height': '100%',
@@ -164,7 +162,7 @@ app.layout = html.Div(
                     "padding-top": '2px',
                     "padding-bottom": '2px'}),
             html.Div(children=dcc.Graph(id='table_figure_2017',
-                                        figure={"layout": {"height": 355}}),
+                                        figure={"layout": {"height": 340}}),
                 style={
                     'width': '48%',
                     'height': '100%',
@@ -178,39 +176,42 @@ app.layout = html.Div(
             'textAlign': 'center'
         }),
         # 2012 Header
-        html.H2(
-            children=[
-                'Distribution of ',
-                html.Div(id='selected_metric_2012'),
-                ' by state in 2012'],
+        html.Div(
+            html.Label(
+                children=['2012: Distribution of ', html.Label(id='selected_metric_2012'), ' by state'],
+            ),
             style={
-                'textAlign': 'left',
+                'textAlign': 'center',
                 'color': 'black',
+                'fontSize': '21px',
+                "font-weight": "bold",
                 'backgroundColor': 'white',
-                'margin-top': '3px',
-                'margin-bottom': '3px'
+                'margin-top': '4px',
+                'margin-bottom': '2px'
             }
         ),
         # 2012 Map and Table
         html.Div([ 
             html.Div(children=dcc.Graph(id='map_figure_2012',
-                                        figure={"layout": {"height": 355}}), 
+                                        figure={"layout": {"height": 340}}), 
                 style={
                     'width': '48%',
                     'height': '100%',
                     'display': 'inline-block',
                     "padding-left": "5px",
                     "padding-right": "5px",
-                    "padding-top": '2px'}),
+                    "padding-top": '2px',
+                    "padding-bottom": '0px'}),
             html.Div(children=dcc.Graph(id='table_figure_2012',
-                                        figure={"layout": {"height": 355}}), 
+                                        figure={"layout": {"height": 340}}), 
                 style={
                     'width': '48%',
                     'height': '100%',
                     'display': 'inline-block',
                     "padding-left": "5px",
                     "padding-right": "5px",
-                    "padding-top": '2px'}),
+                    "padding-top": '2px',
+                    "padding-bottom": '0px'}),
         ],
         style={
             'textAlign': 'center'
@@ -222,7 +223,7 @@ app.layout = html.Div(
 @app.callback(
     dash.dependencies.Output('selected_metric_2017', 'children'),
     dash.dependencies.Output('selected_metric_2012', 'children'),
-    [dash.dependencies.Input('metric_string', 'value')]
+    [dash.dependencies.Input('map_dropdown', 'value')]
 )
 def get_metric(value):
     """Gets selected metric to update titles for maps and tables
