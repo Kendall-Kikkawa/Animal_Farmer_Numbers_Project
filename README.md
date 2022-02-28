@@ -20,7 +20,9 @@ The Economic Research Service (ERS), which is a subdivision of the USDA, reports
 For each state, we computed the share of animal agriculture by (1) including feed crops and (2) excluding feed crops (both numbers are decimals). The explicit formulas are given below:
 
 ```math
-\text{Animal Agricultural Share, Excluding Feed Commodities (AASXF)} = \frac{\text{Animals and Products}}{\text{All Commodities}}
+\begin{aligned}
+\text{Animal Agricultural Share, \\ Excluding Feed Commodities (AASXF)} &= \frac{\text{Animals and Products}}{\text{All Commodities}}
+\end{aligned}
 ```
 
 ```math
@@ -75,7 +77,7 @@ The table below summarizes all of the metrics that are viewable on the dashboard
 
 | Metric | Abbreviation | Calculation | Data Source(s) | Notes |
 :-------------: | :--: | :----: | :----: | :------: |
-| Animal Agricultural Share, Excluding Feed Commodities | AASXF | ```math\frac{\text{Animals and Products}}{\text{All Commodities}}``` | ERS |  |
+| Animal Agricultural Share, Excluding Feed Commodities | AASXF | (Animals and Products) / (All Commodities) | ERS |  |
 | Animal Agricultural Share, Including Feed Commodities | AASF | $\frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}}$ | ERS | |
 | Number of Individual and Family Farmers | IFF | "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS" | NASS | Raw Field in NASS data |
 | Individual and Family Farmers, Excluding Feed Commodities | IFAFXF | $\text{AASXF} * \text{IFF}$ | ERS, NASS | | 
