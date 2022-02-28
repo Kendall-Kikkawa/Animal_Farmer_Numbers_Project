@@ -26,6 +26,10 @@ For each state, we computed the share of animal agriculture by (1) including fee
 ```
 
 ```math
+\parbox{15em}{Animal Agricultural Share, \\ Excluding Feed Commodities (AAXSF)} = \frac{\text{Animals and Products}}{\text{All Commodities}}
+```
+
+```math
 \text{Animal Agricultural Share}, \\ \text{Including Feed Commodities (AASF)} = \frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}}
 ```
 
@@ -81,7 +85,7 @@ The table below summarizes all of the metrics that are viewable on the dashboard
 | Animal Agricultural Share, Including Feed Commodities | AASF | $`\frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}}`$ | ERS | |
 | Number of Individual and Family Farmers | IFF | "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS" | NASS | Raw Field in NASS data |
 | Individual and Family Farmers, Excluding Feed Commodities | IFAFXF | $`\text{AASXF} * \text{IFF}`$ | ERS, NASS | | 
-| Individual and Family Farmers, Including Feed Commodities | IFAFXF | $`\text{AASF} * \text{IFF}`$ | ERS, NASS | | 
+| Individual and Family Farmers, Including Feed Commodities | IFAFF | $`\text{AASF} * \text{IFF}`$ | ERS, NASS | | 
 | Total Population | | | CPS | Raw value from CPS data |
 | Total Registered Voters | | | CPS | Raw value from CPS data |
 | Share of Individual and Family Farmers in State Population, Excluding Feed Commodities | IFAFXFSP | $`\frac{\text{IFAFXF}}{\text{Total Population}}`$ | ERS, NASS, CPS | Understood as "Number of IFF's, exlcuding feed, per person" |
