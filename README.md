@@ -1,81 +1,92 @@
-# Animal Farmers Project (Good Food Institute)
+# Individual and Family-Owned Animal Farmers
 ---
 ## Overview
 
-The motivation for the Animal Farmers Project is to provide data-based research that can be used to approach politicians about replacing meat products with alternatives. Based on past dicussions, the quantity and distribution of animal farmers across the United States is of particular interest. Using data from the U.S. Department of Agriculture (USDA), this project finds an estimate for the number of animal farmers in the U.S., by state. Specifically, we compute two estimates of this measure:
-- Number of family farmers in animal agriculture, including feed commodities
-- Number of family farmers in animal agriculture, exclusing feed commodities
+This project provides estimates of the number of individuals and family-owned farmers involved in animal agriculture by U.S. state in 2012 and 2017. The data used com from multiple sources: the Economic Research Service of the U.S. Department of Agriculture ([ERS data](https://data.ers.usda.gov/reports.aspx?ID=17832)) the Natural Agricultural Statistics Service of the U.S.D.A. ([NASS data](https://www.nass.usda.gov/Quick_Stats/CDQT/chapter/1/table/1)) and the U.S. Census Bureau Current Population Surveys ([2018 CPS](https://www.census.gov/data/tables/time-series/demo/voting-and-registration/p20-583.html), [2012 CPS](https://www.census.gov/data/tables/2012/demo/voting-and-registration/p20-568.html)). We two estimates of this measure: including and excluding feed commodities.
 
-The methods section below further outlines how these values were calculated.
+We made the following proportionality assumptions due to the lack of specific data:
+- Ratio of animal agriculture revenue in total agriculture revenue in the state is proportional to that ratio among individual and family farmers.
+- Proportion of individual and family farmers that vote is the same as average in the state.
+- We count each individual and family farm as ONE person.  If you believe that the right number is N>1, multiply all reported numbers for family farmers by N.
 
-Using data from the U.S. Census Bureau, Current Population Surveys, we also compare these farmer estimates to the population and voter distribution across the U.S. To make the analysis easily digestable, we produce a [dashboard](https://gentle-bastion-68761.herokuapp.com/) to easily interact with the data, and two excel files that contain the animal farmer estimates, that can be used for future analysis.
+To make the analysis easily digestable, we produce a [dashboard](https://gentle-bastion-68761.herokuapp.com/) to easily interact with the data, and two excel files that contain the animal farmer estimates, that can be used for future analysis.
 
 ## Methods
 
 ### ERS Commodity Data
 
-The Economic Research Service (ERS), which is a subdivision of the USDA, reports [Annual cash receipts by commodity](https://data.ers.usda.gov/reports.aspx?ID=17832), for each state.
+The Economic Research Service (ERS), which is a subdivision of the USDA, reports annual cash receipts by commodity, for each state ([ERS data](https://data.ers.usda.gov/reports.aspx?ID=17832)).
 
 For each state, we computed the share of animal agriculture by (1) including feed crops and (2) excluding feed crops (both numbers are decimals). The explicit formulas are given below:
 
-<p align="center">
-    <img src="https://latex.codecogs.com/svg.image?\text{Agriculture&space;share&space;without&space;feed}&space;=&space;\frac{\text{Animals&space;and&space;Products}}{\text{All&space;Commodities}}" title="\text{Agriculture share, without feed} = \frac{\text{Animals and Products}}{\text{All Commodities}}" />
-</p>
+$$
+\text{Animal Agricultural Share, Excluding Feed Commodities (AASXF)} = \frac{\text{Animals and Products}}{\text{All Commodities}}
+$$
 
-<p align="center">
-    <img src="https://latex.codecogs.com/svg.image?\text{Agriculture&space;share&space;with&space;feed}&space;=&space;\frac{\text{Animals&space;and&space;Products&space;&plus;&space;Feed&space;Crops}}{\text{All&space;Commodities}" title="\text{Agriculture share, with feed} = \frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}" />
-</p>
-
+$$
+\text{Animal Agricultural Share, Including Feed Commodities (AASF)} = \frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}}
+$$
 
 ### NASS Census Data
 
-The National Agricultural Statistice Service (NASS), which is a subdivision of the USDA, provides [census data](https://www.nass.usda.gov/Quick_Stats/CDQT/chapter/1/table/1) for various farm and crop operations, for each state.
+The National Agricultural Statistice Service (NASS), which is a subdivision of the USDA, provides census data for various farm and crop operations, for each state ([NASS data](https://www.nass.usda.gov/Quick_Stats/CDQT/chapter/1/table/1)).
 
-For each state, we estimate the number of family farmers by using the "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS" field in the NASS data. We then multiply this by our previously computed share values to get an estimate for the number of animal farmers in each state.
+For each state, we estimate the number of individual and family farmers (IFF) by using the "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS" field in the NASS data. We then multiply this by our previously computed share values to get an estimate for the number of animal farmers in each state.
 
-<p align="center">
-    <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers,&space;without&space;feed}&space;=&space;\text{(Ag.&space;Share,&space;without&space;feed)}&space;*&space;\text{(Num&space;Family&space;Farmers)}" title="\text{Num Animal Farmers, without feed} = \text{(Ag. Share, without feed)} * \text{(Num Family Farmers)}" />
-</p>
+$$
+\text{Individual and Family Farmers, Excluding Feed Commodities (IFAFXF)} = \text{AAXXF} * \text{IFF}
+$$
 
-<p align="center">
-    <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers,&space;with&space;feed}&space;=&space;\text{(Ag.&space;Share,&space;with&space;feed)}&space;*&space;\text{(Num&space;Family&space;Farmers)}" title="\text{Num Animal Farmers, with feed} = \text{(Ag. Share, with feed)} * \text{(Num Family Farmers)}" />
-</p>
+$$
+\text{Individual and Family Farmers, Including Feed Commodities (IFAFF)} = \text{AASF} * \text{IFF}
+$$
 
-The NASS only provides data from 2017 and 2012, so the plots below display the raw number of family farmers by state, without and with feed, respectively, in those years.
-
-![](plots/num_farmers_without_feed.png) 
-
-![](plots/num_farmers_with_feed.png)
+The NASS only provides data from 2017 and 2012, so our analysis only estimates the raw number of family farmers by state, without and with feed, respectively, in those years.
 
 ### Census Bureau CPS Data
 
-To better understand these farmer estimates in context, we compared them to the total populations and the voting populations in each state. The U.S. Census Bureau, Current Population Survey collects data every two years on population and voting totals. Therefore, for our comparison, we used the 2012 CPS data directly, and we used the 2018 CPS data as a proxy for the 2017 totals (since the NASS only has data from 2017). The 2012 data can be found ([here](https://www.census.gov/data/tables/2012/demo/voting-and-registration/p20-568.html)), in table 4a, and the 2018 data can be found ([here](https://www.census.gov/data/tables/time-series/demo/voting-and-registration/p20-583.html)), in table 4a.
+To better understand these farmer estimates in context, we compared them to the total populations and the voting populations in each state. The U.S. Census Bureau, Current Population Survey collects data every two years on population and voting totals. Therefore, for our comparison, we used the 2012 CPS data directly, and we used the 2018 CPS data as a proxy for the 2017 totals, since the NASS only has data from 2017 ([2018 CPS](https://www.census.gov/data/tables/time-series/demo/voting-and-registration/p20-583.html), [2012 CPS](https://www.census.gov/data/tables/2012/demo/voting-and-registration/p20-568.html)).
 
-To compare the farmer estimates to the total population, we compute farmer estimates, normalized by population size, according to the equation below.
+To compare the farmer estimates to the total population, we compute farmer estimates, normalized by population size, according to the equations below.
 
-<p align="center">
-    <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers&space;per&space;Person}&space;=&space;\frac{\text{Num&space;of&space;Family&space;Farmers}}{\text{Total&space;Population}}" title="\text{Num Animal Farmers per Person} = \frac{\text{Num of Family Farmers}}{\text{Total Population}}" />
-</p>
+$$
+\text{Share of Individual and Family Farmers in State Population, Excluding Feed Commodities (IFAFXFSP)} = \frac{\text{IFAFXF}}{\text{Total Population}}
+$$
 
-Again, we visualize estimate metric when excluding and including feed commodities, in 2012 and 2017.
-
-![](plots/farmers_per_person_without_feed.png) 
-
-![](plots/farmers_per_person_with_feed.png)
+$$
+\text{Share of Individual and Family Farmers in State Population, Including Feed Commodities (IFAFFSP)} = \frac{\text{IFAFF}}{\text{Total Population}}
+$$
 
 To compare the farmer estimates to the total number of registered voters, we compute farmer estimates, normalized by registered voters, according to the equation below.
 
-<p align="center">
-    <img src="https://latex.codecogs.com/svg.image?\text{Num&space;Animal&space;Farmers&space;per&space;Person}&space;=&space;\frac{\text{Num&space;of&space;Family&space;Farmers}}{\text{Total&space;Registered&space;Voters}}" title="\text{Num Animal Farmers per Person} = \frac{\text{Num of Family Farmers}}{\text{Total Registered Voters}}" />
-</p>
+$$
+\text{Share of Individual and Family Farmers in State Population, Excluding Feed Commodities (IFAFXFRV)} = \frac{\text{IFAFXF}}{\text{Total Registered Voters}}
+$$
 
-Again, we visualize estimate metric when excluding and including feed commodities, in 2012 and 2017.
-
-![](plots/farmers_per_voter_without_feed.png) 
-
-![](plots/farmers_per_voter_with_feed.png) 
+$$
+\text{Share of Individual and Family Farmers in State Population, Including Feed Commodities (IFAFFRV)} = \frac{\text{IFAFF}}{\text{Total Registered Voters}}
+$$
 
 The aforementioned [dashboard](https://gentle-bastion-68761.herokuapp.com/) provides an interactive way to analyze these metrics. All of the maps above (and more) are viewable on the dashboard.
+
+### Data Summary
+
+The table below summarizes all of the metrics that are viewable on the dashboard (computed and raw), and the abbreviations used to refer to them.
+
+| Metric | Abbreviation | Calculation | Data Source(s) | Notes |
+:-------------: | :--: | :----: | :----: | :------: |
+| Animal Agricultural Share, Excluding Feed Commodities | AASXF | $\frac{\text{Animals and Products}}{\text{All Commodities}}$ | ERS |  |
+| Animal Agricultural Share, Including Feed Commodities | AASF | $\frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}}$ | ERS | |
+| Number of Individual and Family Farmers | IFF | "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS" | NASS | Raw Field in NASS data |
+| Individual and Family Farmers, Excluding Feed Commodities | IFAFXF | $\text{AASXF} * \text{IFF}$ | ERS, NASS | | 
+| Individual and Family Farmers, Including Feed Commodities | IFAFXF | $\text{AASF} * \text{IFF}$ | ERS, NASS | | 
+| Total Population | | | CPS | Raw value from CPS data |
+| Total Registered Voters | | | CPS | Raw value from CPS data |
+| Share of Individual and Family Farmers in State Population, Excluding Feed Commodities | IFAFXFSP | $\frac{\text{IFAFXF}}{\text{Total Population}}$ | ERS, NASS, CPS | Understood as "Number of IFF's, exlcuding feed, per person" |
+| Share of Individual and Family Farmers in State Population, Including Feed Commodities | IFAFFSP | $\frac{\text{IFAFF}}{\text{Total Population}}$ | ERS, NASS, CPS | Understood as "Number of IFF's, including feed, per person" |
+| Share of Individual and Family Farmers in State Population, Excluding Feed Commodities | IFAFXFRV | $\frac{\text{IFAFXF}}{\text{Total Registered Voters}}$ | ERS, NASS, CPS | Understood as "Number of IFF's, exlcuding feed, per registered voter" |
+| Share of Individual and Family Farmers in State Population, Including Feed Commodities | IFAFFRV | $\frac{\text{IFAFF}}{\text{Total Registered Voters}}$ | ERS, NASS, CPS | Understood as "Number of IFF's, including feed, per registered voter" |
+
 
 ## Repository Stucture
 
@@ -145,20 +156,10 @@ Bash script that installs necessary libraries (pandas, numpy, openpyxl) and exec
 ### Files related to the Web App Dashboard
 
 #### `app.py`
-Python file that creates the interative [dashboard](https://gentle-bastion-68761.herokuapp.com/) for comparing and visualizing different metrics across different states. Prior to deploying the app, this script also computes the normalized metrics and creates the plots in the Exploratory Data Analysis section.
+Python file that creates the interative [dashboard](https://gentle-bastion-68761.herokuapp.com/) for comparing and visualizing different metrics across different states.
 
 #### `dictionaries.py`
-File that contains python dictionaries that map column names to cleaner title and legend labels for the plots on the dashboard. If you would like to change the labels that are used to describe various metrics on the dashboard, please refer to this file.
-
-#### `plots/`
-Folder than contains the png files for the plots that are created on the dashboard (generated by `app.py`), and that are embedded in this ReadMe file.
-
-- `num_farmers_without_feed.png`
-- `num_farmers_with_feed.png`
-- `farmers_per_person_without_feed.png`
-- `farmers_per_person_with_feed.png`
-- `farmers_per_voter_without_feed.png`
-- `farmers_per_voter_with_feed.png`
+File that contains python dictionaries that map column names to cleaner titles, legend labels, and their calculations, for the plots on the dashboard. If you would like to change the labels that are used to describe various metrics on the dashboard (i.e. information that changes upon selecting a drop-down option), refer to this file.
 
 #### App Deployment
 - `Dockerfile`, `.dockerignore`, `requirements.txt`: files needed to create a Docker image and container for the web app.

@@ -47,11 +47,11 @@ calculations_Dict = {'Animal_ag_share_no_feed': '''AASXF = (Animals and Products
                     'Animal_ag_share_feed': '''AASF = (Animals and Products + Feed Crops) / (All Commodities)''',
                     'Number_of_Family_Farmers': '''IFF = (NASS Field) "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS"''',
                     'Farmers_in_animal_ag_no_feed': '''IFAFXF = AASXF * IFF''',
-                    'Farmers_in_animal_ag_feed': '''IFAFF = AASXF * IFF''',
+                    'Farmers_in_animal_ag_feed': '''IFAFF = AASF * IFF''',
                     'Total_Population': 'Raw value from CPS',
                     'Total_Registered': 'Raw value from CPS',
                     'farmers_no_feed_per_person': 'IFAFXFSP = (IFAFXF) / (Total Population)',
-                    'farmers_feed_per_person': 'IFAFXFTRV = (IFAFXF) / (Total Registered Voters)',
+                    'farmers_feed_per_person': 'IFAFXFRV = (IFAFXF) / (Total Registered Voters)',
                     'farmers_no_feed_per_voter': 'IFAFFSP = (IFAFF) / (Total Population)',
-                    'farmers_feed_per_voter': 'IFAFXFTRV = (IFAFXF) / (Total Registered Voters)'
+                    'farmers_feed_per_voter': 'IFAFXFRV = (IFAFXF) / (Total Registered Voters)'
                     }
