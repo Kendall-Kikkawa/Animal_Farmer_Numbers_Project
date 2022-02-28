@@ -26,7 +26,7 @@ For each state, we computed the share of animal agriculture by (1) including fee
 ```
 
 ```math
-\parbox{15em}{Animal Agricultural Share, \\ Excluding Feed Commodities (AAXSF)} = \frac{\text{Animals and Products}}{\text{All Commodities}}
+\parbox[t]{7cm}{Animal Agricultural Share, \\ Excluding Feed Commodities (AAXSF)} = \frac{\text{Animals and Products}}{\text{All Commodities}}
 ```
 
 ```math
