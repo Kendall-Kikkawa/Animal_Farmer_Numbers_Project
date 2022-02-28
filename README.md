@@ -19,17 +19,13 @@ The Economic Research Service (ERS), which is a subdivision of the USDA, reports
 
 For each state, we computed the share of animal agriculture by (1) including feed crops and (2) excluding feed crops (both numbers are decimals). The explicit formulas are given below:
 
-$$
-\text{Animal Agricultural Share, Excluding Feed Commodities (AASXF)} = \frac{\text{Animals and Products}}{\text{All Commodities}}
-$$
-
 ```math
 \text{Animal Agricultural Share, Excluding Feed Commodities (AASXF)} = \frac{\text{Animals and Products}}{\text{All Commodities}}
 ```
 
-$$
+```math
 \text{Animal Agricultural Share, Including Feed Commodities (AASF)} = \frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}}
-$$
+```
 
 ### NASS Census Data
 
@@ -37,13 +33,13 @@ The National Agricultural Statistice Service (NASS), which is a subdivision of t
 
 For each state, we estimate the number of individual and family farmers (IFF) by using the "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS" field in the NASS data. We then multiply this by our previously computed share values to get an estimate for the number of animal farmers in each state.
 
-$$
+```math
 \text{Individual and Family Farmers, Excluding Feed Commodities (IFAFXF)} = \text{AAXXF} * \text{IFF}
-$$
+```
 
-$$
+```math
 \text{Individual and Family Farmers, Including Feed Commodities (IFAFF)} = \text{AASF} * \text{IFF}
-$$
+```
 
 The NASS only provides data from 2017 and 2012, so our analysis only estimates the raw number of family farmers by state, without and with feed, respectively, in those years.
 
@@ -53,23 +49,23 @@ To better understand these farmer estimates in context, we compared them to the 
 
 To compare the farmer estimates to the total population, we compute farmer estimates, normalized by population size, according to the equations below.
 
-$$
+```math
 \text{Share of Individual and Family Farmers in State Population, Excluding Feed Commodities (IFAFXFSP)} = \frac{\text{IFAFXF}}{\text{Total Population}}
-$$
+```
 
-$$
+```math
 \text{Share of Individual and Family Farmers in State Population, Including Feed Commodities (IFAFFSP)} = \frac{\text{IFAFF}}{\text{Total Population}}
-$$
+```
 
 To compare the farmer estimates to the total number of registered voters, we compute farmer estimates, normalized by registered voters, according to the equation below.
 
-$$
+```math
 \text{Share of Individual and Family Farmers in State Population, Excluding Feed Commodities (IFAFXFRV)} = \frac{\text{IFAFXF}}{\text{Total Registered Voters}}
-$$
+```
 
-$$
+```math
 \text{Share of Individual and Family Farmers in State Population, Including Feed Commodities (IFAFFRV)} = \frac{\text{IFAFF}}{\text{Total Registered Voters}}
-$$
+```
 
 The aforementioned [dashboard](https://gentle-bastion-68761.herokuapp.com/) provides an interactive way to analyze these metrics. All of the maps above (and more) are viewable on the dashboard.
 
