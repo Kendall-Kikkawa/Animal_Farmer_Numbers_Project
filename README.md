@@ -23,7 +23,9 @@ $$
 \text{Animal Agricultural Share, Excluding Feed Commodities (AASXF)} = \frac{\text{Animals and Products}}{\text{All Commodities}}
 $$
 
-<img src="https://latex.codecogs.com/gif.latex?\text{Animal Agricultural Share, Excluding Feed Commodities (AASXF)} = \frac{\text{Animals and Products}}{\text{All Commodities}}" /> 
+```math
+\text{Animal Agricultural Share, Excluding Feed Commodities (AASXF)} = \frac{\text{Animals and Products}}{\text{All Commodities}}
+```
 
 $$
 \text{Animal Agricultural Share, Including Feed Commodities (AASF)} = \frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}}
