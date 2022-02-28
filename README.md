@@ -13,6 +13,8 @@ To make the analysis easily digestable, we produce a [dashboard](https://gentle-
 
 ## Methods
 
+**Note on Equation Rendering**: If the equations in the below section do not load properly on your browser, try opening this repository in Google Chrome, add install the [xhub extension](https://chrome.google.com/webstore/detail/xhub/anidddebgkllnnnnjfkmjcaallemhjee).
+
 ### ERS Commodity Data
 
 The Economic Research Service (ERS), which is a subdivision of the USDA, reports annual cash receipts by commodity, for each state ([ERS data](https://data.ers.usda.gov/reports.aspx?ID=17832)).
