@@ -26,11 +26,7 @@ For each state, we computed the share of animal agriculture by (1) including fee
 ```
 
 ```math
-\text{Animal Agricultural Share, Including Feed Commodities (AASF)} = \frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}}
-```
-
-```math
-(test \\ this is a test) = \frac{test}{test}
+\text{Animal Agricultural Share}, \\ \text{Including Feed Commodities (AASF)} = \frac{\text{Animals and Products + Feed Crops}}{\text{All Commodities}}
 ```
 
 ### NASS Census Data
