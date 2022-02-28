@@ -1,27 +1,17 @@
 ###### DICTIONARIES TO MAKE NICER TITLES AND LEGENDS ON THE APP #######
 
 ## Dictionary to map columns to cleaner version of the metric
-titles_Dict = { 'Animal_ag_share_no_feed': 'Agriculture Share, Excluding Feed Commodities',
-                'Animal_ag_share_feed': 'Agriclutre Share, Including Feed Commodities',
-                'Number_of_Family_Farmers': 'Family Farmers',
-                'Farmers_in_animal_ag_no_feed': 'Animal Farmers, Excluding Feed Commodities',
-                'Farmers_in_animal_ag_feed': 'Animal Farmers, Including Feed Commodities',
+titles_Dict = { 'Animal_ag_share_no_feed': 'Animal Agriculture Share, Excluding Feed Commodities (AASXF)',
+                'Animal_ag_share_feed': 'Animal Agriclutre Share, Including Feed Commodities (AASF)',
+                'Number_of_Family_Farmers': 'Number of Individual and Family Farmers (IFF)',
+                'Farmers_in_animal_ag_no_feed': 'Individual and Family Animal Farmers, Excluding Feed Commodities (IFAFXF)',
+                'Farmers_in_animal_ag_feed': 'Individual and Family Animal Farmers, Including Feed Commodities (IFAFF)',
                 'Total_Population': 'Total Population',
-                'Total_Citizen_Population': 'Total Citizen Population',
                 'Total_Registered': 'Total Registered Voters',
-                'Percent_Registered_Total': 'Percent of Total that are registered to Vote',
-                'Total_Registered_Margin_of_Error': 'Margin of Error for Total Registered Voters',
-                'Percent_Registered_Citizen': 'Percent of Citizens that are registered to vote',
-                'Citizen_Registered_Margin_of_Error': 'Margin of Error for Citizen Registered Voters',
-                'Total_Voted': 'Total Votes casted',
-                'Percent_Voted_Total': 'Percent of Total that voted',
-                'Total_Voted_Margin_of_Error': 'Margin of Error for the total number of votes casted',
-                'Percent_Voted_Citizen': 'Percent of Citizens that voted',
-                'Citizen_Voted_Margin_of_Error': 'Margin of Error for the number of citizens that voted',
-                'farmers_no_feed_per_person': 'Animal Farmers per Person, Excluding Feed Commodities',
-                'farmers_feed_per_person': 'Animal Farmers per Person, Including Feed Commodities',
-                'farmers_no_feed_per_voter': 'Animal Farmers per Voter, Excluding Feed Commodities',
-                'farmers_feed_per_voter': 'Animal Farmers per Voter, Including Feed Commodities'
+                'farmers_no_feed_per_person': 'Share of Individual and Family Animal Farmers in State Population, Excluding Feed Commodities (IFAFXFSP)',
+                'farmers_feed_per_person': 'Share of Individual and Family Animal Farmers in State Population, Including Feed Commodities (IFAFXFTRV)',
+                'farmers_no_feed_per_voter': 'Share of Individual and Family Animal Farmers in Total Registered Voters, Excluding Feed Commodities (IFAFFSP)',
+                'farmers_feed_per_voter': 'Share of Individual and Family Animal Farmers in Total Registered Voters, Including Feed Commodities (IFAFFTRV)'
                 }
 
 ## Dictionary to map columns to the legend title used in the figure
@@ -31,19 +21,37 @@ legends_Dict = {'Animal_ag_share_no_feed': 'Share (%)',
                 'Farmers_in_animal_ag_no_feed': '# of Farmers',
                 'Farmers_in_animal_ag_feed': '# of Farmers',
                 'Total_Population': '# of People',
-                'Total_Citizen_Population': '# of People',
                 'Total_Registered': '# of Voters',
-                'Percent_Registered_Total': 'Percent (%)',
-                'Total_Registered_Margin_of_Error': 'Margin of Error (%)',
-                'Percent_Registered_Citizen': 'Percent (%)',
-                'Citizen_Registered_Margin_of_Error': 'Margin of Error (%)',
-                'Total_Voted': '# of Voters',
-                'Percent_Voted_Total': 'Percent (%)',
-                'Total_Voted_Margin_of_Error': 'Margin of Error (%)',
-                'Percent_Voted_Citizen': 'Percent (%)',
-                'Citizen_Voted_Margin_of_Error': 'Margin of Error (%)',
                 'farmers_no_feed_per_person': '# Farmers / Person',
                 'farmers_feed_per_person': '# Farmers / Person',
                 'farmers_no_feed_per_voter': '# Farmers / Voter',
-                'farmers_feed_per_voter': '# Farmers / Voter',
+                'farmers_feed_per_voter': '# Farmers / Voter'
                 }
+
+## Dictionary to map columns to the calculation used to compute them
+dataSources_Dict = {'Animal_ag_share_no_feed': 'ERS',
+                    'Animal_ag_share_feed': 'ERS',
+                    'Number_of_Family_Farmers': 'NASS',
+                    'Farmers_in_animal_ag_no_feed': 'ERS, NASS',
+                    'Farmers_in_animal_ag_feed': 'ERS, NASS',
+                    'Total_Population': 'CPS',
+                    'Total_Registered': 'CPS',
+                    'farmers_no_feed_per_person': 'ERS, NASS, CPS',
+                    'farmers_feed_per_person': 'ERS, NASS, CPS',
+                    'farmers_no_feed_per_voter': 'ERS, NASS, CPS',
+                    'farmers_feed_per_voter': 'ERS, NASS, CPS',
+                    }
+
+## Dictionary to map columns to the calculation used to compute them
+calculations_Dict = {'Animal_ag_share_no_feed': '''AASXF = (Animals and Products) / (All Commodities)''',
+                    'Animal_ag_share_feed': '''AASF = (Animals and Products + Feed Crops) / (All Commodities)''',
+                    'Number_of_Family_Farmers': '''IFF = (NASS Field) "FARM OPERATIONS, ORGANIZATION, TAX PURPOSES, FAMILY & INDIVIDUAL - NUMBER OF OPERATIONS"''',
+                    'Farmers_in_animal_ag_no_feed': '''IFAFXF = AASXF * IFF''',
+                    'Farmers_in_animal_ag_feed': '''IFAFF = AASF * IFF''',
+                    'Total_Population': 'Raw value from CPS',
+                    'Total_Registered': 'Raw value from CPS',
+                    'farmers_no_feed_per_person': 'IFAFXFSP = (IFAFXF) / (Total Population)',
+                    'farmers_feed_per_person': 'IFAFXFRV = (IFAFXF) / (Total Registered Voters)',
+                    'farmers_no_feed_per_voter': 'IFAFFSP = (IFAFF) / (Total Population)',
+                    'farmers_feed_per_voter': 'IFAFXFRV = (IFAFXF) / (Total Registered Voters)'
+                    }
