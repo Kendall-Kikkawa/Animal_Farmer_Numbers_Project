@@ -31,7 +31,7 @@ For each state, we computed the share of animal agriculture by (1) including fee
 
 ```math
 \begin{aligned}
-& (test \\ this is a test) = \frac{test}{test}
+(test \\ this is a test) = \frac{test}{test}
 \end{aligned}
 ```
 
