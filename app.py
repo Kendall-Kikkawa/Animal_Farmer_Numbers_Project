@@ -92,7 +92,7 @@ app.layout = html.Div(
                                 '''),
                         html.Label(
                             children = ['For additional details on data sources and metric calculations, refer to the ', 
-                                dcc.Link('project repository', href='https://github.com/Kendall-Kikkawa/GFI_rancher_project'),
+                                dcc.Link('project repository', href='https://github.com/Kendall-Kikkawa/Animal_Farmer_Numbers_Project/blob/main/README.md'),
                                 "."
                             ]
                         )
