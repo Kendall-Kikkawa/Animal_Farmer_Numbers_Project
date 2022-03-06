@@ -173,7 +173,7 @@ File that contains python dictionaries that map column names to cleaner titles, 
 
 ### Computing Estimates
 
-1. Download ([Python](https://www.python.org))
+1. Download [Python](https://www.python.org)
 2. Download this repository
 3. (Optional) Modify the data files prior to computation (i.e. if method of estimation changes, or new census data becomes available)
 4. Open Terminal/Cmd window on machine, navigate to the directory where you have saved the repository, and run the following command (performs [pandas](https://pandas.pydata.org/), [numpy](https://numpy.org/), and [openpyxl](https://openpyxl.readthedocs.io/en/stable/) downloads)
