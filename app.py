@@ -91,7 +91,8 @@ app.layout = html.Div(
                                     3. We count each individual and family farm as ONE person - if you believe that the right number is N>1, multiply all reported numbers for family farmers by N.
                                 '''),
                         html.Label(
-                            children = ['For additional details on data sources and metric calculations, refer to the ', 
+                            children = ['To access any of the links in this dashboard, right click on the hyperlink to open it in a new tab. ',
+                                'For additional details on data sources and metric calculations, refer to the ', 
                                 dcc.Link('project repository', href='https://github.com/Kendall-Kikkawa/Animal_Farmer_Numbers_Project/blob/main/README.md'),
                                 "."
                             ]
